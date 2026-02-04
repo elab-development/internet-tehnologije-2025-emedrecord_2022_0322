@@ -1,6 +1,7 @@
 import { AppointmentChart } from "@/components/charts/appointment-chart";
 import { StatSummary } from "@/components/charts/stat-summary";
 import { StatCard } from "@/components/stat-card";
+import { RecentAppointments } from "@/components/tables/recent-appointment";
 import { Button } from "@/components/ui/button";
 import { getPatientDashboardStatistics } from "@/utils/services/patient";
 import { UserButton } from "@clerk/nextjs";
@@ -92,9 +93,9 @@ const PatientDashboard = async () => {
           <AppointmentChart data={monthlyData} />
         </div> 
 
-        {/* <div className="bg-white rounded-xl p-4 mt-8">
+         <div className="bg-white rounded-xl p-4 mt-8">
           <RecentAppointments data={last5Records} />
-        </div> */}
+        </div> 
       </div>
 
       {/* RIGHT */}
