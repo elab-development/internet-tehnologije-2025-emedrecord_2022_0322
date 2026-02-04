@@ -40,7 +40,6 @@ za pecka koji nije debil <3333
 git clone https://github.com/dpopoviic/emedrecord_app.git GDE KLONIRAS PUTANJA
 
 kreiraj .env fajl izvan svega u visual studio code-u evo sta treba da stoji u fajlu
-
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_YW1hemVkLWdlbGRpbmctOS5jbGVyay5hY2NvdW50cy5kZXYk
 CLERK_SECRET_KEY=sk_test_4VYjdtJ2rxx8CyOqVO6DTxTsxozzm4jMPZaaW9nRUg
 
@@ -59,7 +58,7 @@ NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 # server with the ⁨prisma dev⁩ CLI command, when not choosing any non-default ports or settings. The API key, unlike the
 # one found in a remote Prisma Postgres URL, does not contain any sensitive information.
 
-DATABASE_URL="postgresql://neondb_owner:npg_m0v9cNQFMlLu@ep-purple-band-ag9lp5pp-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://neondb_owner:npg_m0v9cNQFMlLu@ep-purple-band-ag9lp5pp-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=verify-full&channel_binding=require"
 
 npm install
 
