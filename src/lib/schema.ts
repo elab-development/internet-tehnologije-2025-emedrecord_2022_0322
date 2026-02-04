@@ -9,8 +9,8 @@ export const PatientFormSchema = z.object({
   last_name: z
     .string()
     .trim()
-    .min(2, "dLast name must be at least 2 characters")
-    .max(30, "First name can't be more than 50 characters"),
+    .min(2, "Last name must be at least 2 characters")
+    .max(30, "Last name can't be more than 50 characters"),
   date_of_birth: z.coerce.date(),
   gender: z.enum(["MALE", "FEMALE"], { message: "Gender is required" }),
 
