@@ -12,6 +12,8 @@ import { ViewAppointment } from '@/components/view-appoitment';
 import { Table } from '../../../../../emedrecord_app/src/components/tables/table';
 import { Appointment, Doctor, Patient } from '@prisma/client';
 import { AppointmentActionOptions } from '@/components/appoitment-actions';
+import { DATA_LIMIT } from '@/utils/seetings';
+import { Pagination } from '@/components/pagination';
 
 const columns = [
   {
@@ -154,9 +156,16 @@ const Appointments = async(props: {searchParams? : {[key: string]: string | unde
             renderRow={renderItem}
             data={data}
             />
+
+            {data?.length > 0 && (
+          <Pagination
+            totalRecords={totalRecord!}
+            currentPage={currentPage!}
+            totalPages={totalPages!}
+            limit={DATA_LIMIT}
+          />  )}
       </div>
     </div>
-  )
-}   
-
+  );
+};
 export default Appointments
