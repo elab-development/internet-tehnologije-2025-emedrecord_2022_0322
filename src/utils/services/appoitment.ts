@@ -196,7 +196,7 @@ export async function getAppointmentWithMedicalRecordsById(id: number) {
       include: {
         patient: true,
         doctor: true,
-        bills: true,
+       // bills: true,
         medical: {
           include: {
             diagnosis: true,
