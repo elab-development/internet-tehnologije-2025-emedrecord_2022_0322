@@ -4,6 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
 import { EllipsisVertical, User } from "lucide-react";
 import Link from "next/link";
+import { AppointmentActionDialog } from "./appointment-action-dialog";
 
 interface ActionsProps {
   userId: string;
@@ -47,7 +48,21 @@ export const AppointmentActionOptions = async ({
               <User size={16} /> View Full Details
             </Link>
           </Button>
-
+          {status !== "SCHEDULED" && (
+            <AppointmentActionDialog
+              type="approve"
+              id={appointmentId}
+              disabled={isAdmin || user.userId === doctorId}
+            />
+          )}
+           <AppointmentActionDialog
+            type="cancel"
+            id={appointmentId}
+            disabled={
+              status === "PENDING" &&
+              (isAdmin || user.userId === doctorId || user.userId === patientId)
+            }
+          />
         </div>
       </PopoverContent>
     </Popover>

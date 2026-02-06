@@ -14,7 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { ProfileImage } from '../profile-image';
 import { CustomInput } from '../custom-input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { createNewAppointment } from '@/app/actions/apoitment';
+import { createNewAppointment } from '@/app/actions/appointment';
 import { toast } from "sonner";
 const TYPES = [
   { label: "General Consultation", value: "General Consultation" },

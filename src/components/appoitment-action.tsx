@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { useRouter } from "next/navigation";
-import { appointmentAction } from "@/app/actions/apoitment";
+import { appointmentAction } from "@/app/actions/appointment";
 
 interface ActionProps {
   id: string | number;
