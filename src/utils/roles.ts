@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 export const checkRole = async (role: Roles) => {
   const { sessionClaims } = await auth();
 
-  return sessionClaims?.metadata?.role === role.toLowerCase();
+  return sessionClaims?.metadata?.role?.toLowerCase() === role.toLowerCase();
 };
 
 export const getRole = async () => {

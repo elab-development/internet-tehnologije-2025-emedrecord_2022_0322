@@ -1,7 +1,6 @@
 import { checkRole, getRole } from '@/utils/roles';
 import { auth } from '@clerk/nextjs/server';
 import React from 'react'
-import { getPatientAppointments } from '../../../../../emedrecord_app/src/utils/services/appoitment';
 import { BriefcaseBusiness } from 'lucide-react';
 import SearchInput from '@/components/search-input';
 import App from 'next/app';
@@ -9,11 +8,13 @@ import { ProfileImage } from '@/components/profile-image';
 import { AppointmentStatusIndicator } from '@/components/appointment-status-indicator';
 import { format } from 'date-fns';
 import { ViewAppointment } from '@/components/view-appoitment';
-import { Table } from '../../../../../emedrecord_app/src/components/tables/table';
 import { Appointment, Doctor, Patient } from '@prisma/client';
 import { AppointmentActionOptions } from '@/components/appoitment-actions';
 import { DATA_LIMIT } from '@/utils/seetings';
 import { Pagination } from '@/components/pagination';
+import { getPatientAppointments } from '@/utils/services/appoitment';
+import { Table } from '@/components/tables/table';
+import { AppointmentContainer } from '@/components/appointment-container';
 
 const columns = [
   {
@@ -66,6 +67,8 @@ const Appointments = async(props: {searchParams? : {[key: string]: string | unde
     queryId = userId
   }else if(userRole === "nurse"){
     queryId = undefined
+  }else if(userRole === "patient"){
+    queryId = userId
   }
 
   const { data, totalRecord, currentPage, totalPages } = await getPatientAppointments({
@@ -145,7 +148,7 @@ const Appointments = async(props: {searchParams? : {[key: string]: string | unde
 
         <div className="w-full lg:w-fit flex items-center justify-between lg:justify-start gap-2">
           <SearchInput/>
-          {/* {isPatient && <appointmentContainer id={userId}/>} */}
+           {isPatient && <AppointmentContainer id={userId!}/>}
 
         </div>
 
