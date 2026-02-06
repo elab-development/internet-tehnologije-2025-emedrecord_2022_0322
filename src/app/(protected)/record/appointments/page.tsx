@@ -7,14 +7,14 @@ import App from 'next/app';
 import { ProfileImage } from '@/components/profile-image';
 import { AppointmentStatusIndicator } from '@/components/appointment-status-indicator';
 import { format } from 'date-fns';
-import { ViewAppointment } from '@/components/view-appoitment';
 import { Appointment, Doctor, Patient } from '@prisma/client';
-import { AppointmentActionOptions } from '@/components/appoitment-actions';
 import { DATA_LIMIT } from '@/utils/seetings';
 import { Pagination } from '@/components/pagination';
-import { getPatientAppointments } from '@/utils/services/appoitment';
 import { Table } from '@/components/tables/table';
 import { AppointmentContainer } from '@/components/appointment-container';
+import { ViewAppointment } from '@/components/view-appointment';
+import { AppointmentActionOptions } from '@/components/appointment-actions';
+import { getPatientAppointments } from '@/utils/services/appointment';
 
 const columns = [
   {

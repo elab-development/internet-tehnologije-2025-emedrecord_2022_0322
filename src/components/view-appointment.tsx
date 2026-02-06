@@ -1,4 +1,4 @@
-import { getAppointmentById } from '@/utils/services/appoitment';
+import { getAppointmentById } from '@/utils/services/appointment';
 
 import React from 'react'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 import { AppointmentStatusIndicator } from './appointment-status-indicator';
 import { auth } from '@clerk/nextjs/server';
 import { checkRole } from '@/utils/roles';
-import { AppointmentAction } from './appoitment-action';
+import { AppointmentAction } from './appointment-action';
 
 export const ViewAppointment = async ({ id }: { id: string | undefined }) => {
   const { data } = await getAppointmentById(Number(id!));

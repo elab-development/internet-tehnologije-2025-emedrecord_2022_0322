@@ -6,7 +6,7 @@ import { Appointment } from "@/types/data-types";
 import { ProfileImage } from "../profile-image";
 import { format } from "date-fns";
 import { AppointmentStatusIndicator } from "../appointment-status-indicator";
-import { ViewAppointment } from "../view-appoitment";
+import { ViewAppointment } from "../view-appointment";
 
 
 interface DataProps {
