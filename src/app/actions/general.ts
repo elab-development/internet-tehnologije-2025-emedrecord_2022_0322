@@ -16,14 +16,14 @@ export async function deleteDataById(
 
     }
 
-    // if (
-    //   deleteType === "staff" ||
-    //   deleteType === "patient" ||
-    //   deleteType === "doctor"
-    // ) {
-    //   const client = await clerkClient();
-    //   await client.users.deleteUser(id);
-    // }
+    if (
+      deleteType === "staff" ||
+      deleteType === "patient" ||
+      deleteType === "doctor"
+    ) {
+      const client = await clerkClient();
+      await client.users.deleteUser(id);
+    }
 
     return {
       success: true,
