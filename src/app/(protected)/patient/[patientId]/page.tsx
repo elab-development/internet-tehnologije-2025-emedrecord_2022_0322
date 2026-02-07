@@ -101,14 +101,14 @@ const PatientProfile = async (props: ParamsProps) => {
           </Card>
         </div>
         <div className="mt-10">
-          {/* {cat === "medical-history" && (
+          {cat === "medical-history" && (
             <MedicalHistoryContainer patientId={id} />
-          )} */}
+          )}
 
           {/* {cat === "payments" && <Payments patientId={id!} />} */}
         </div>
       </div>
-    <div className="w-full xl:w-1/3">
+      <div className="w-full xl:w-1/3">
         <div className="bg-white p-4 rounded-md mb-8">
           <h1 className="text-xl font-semibold">Quick Links</h1>
 
