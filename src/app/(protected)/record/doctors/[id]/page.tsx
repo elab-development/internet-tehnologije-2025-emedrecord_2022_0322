@@ -1,5 +1,6 @@
 import { availableDays } from '@/components/available-doctor';
 import { ProfileImage } from '@/components/profile-image';
+import { RatingContainer } from '@/components/rating-container';
 import { RecentAppointments } from '@/components/tables/recent-appointment';
 import { getDoctorById } from '@/utils/services/doctor';
 import { format } from 'date-fns';
@@ -134,10 +135,11 @@ const DoctorProfile = async (props: { params: Promise<{ id: string }> }) => {
           </div>
         </div>
 
-       
+        <RatingContainer id={params?.id} />
       </div>
     </div>
   );
 };
 
 export default DoctorProfile;
+

@@ -106,7 +106,6 @@ const DoctorDashboard = async () => {
           <StatSummary data={appointmentCounts} total={totalAppointment!} />
         </div>
 
-        <AvailableDoctors data={availableDoctors as any} />
       </div>
     </div>
   );
