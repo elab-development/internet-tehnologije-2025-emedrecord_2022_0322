@@ -1,4 +1,5 @@
-import { Link, LucideIcon } from "lucide-react";
+import { LucideIcon } from "lucide-react";
+import Link from "next/link";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
@@ -11,7 +12,7 @@ interface CardProps {
   value: number;
   className?: string;
   iconClassName?: string;
-  link: string;
+  link?: string | null;
 }
 
 const CardIcon = ({ icon: Icon }: { icon: LucideIcon }) => {
@@ -31,14 +32,16 @@ export const StatCard = ({
     <Card className={cn("w-full md:w-[330px] 2xl:w-[250px]", className)}>
       <CardHeader className="flex flex-row items-center justify-between py-3 capitalize">
         <h3>{title}</h3>
-        <Button
-          asChild
-          size="sm"
-          variant="outline"
-          className="font-normal text-xs bg-transparent p-2 h-0 hover:underline"
-        >
-          <Link href={link}>See details</Link>
-        </Button>
+        {link ? (
+          <Button
+            asChild
+            size="sm"
+            variant="outline"
+            className="font-normal text-xs bg-transparent p-2 h-0 hover:underline"
+          >
+            <Link href={link}>See details</Link>
+          </Button>
+        ) : null}
       </CardHeader>
 
       <CardContent>
