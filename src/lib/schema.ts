@@ -69,3 +69,29 @@ export const AppointmentSchema = z.object({
   time: z.string().min(1, "Select appointment time"),
   note: z.string().optional(),
 });
+
+export const StaffSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name must be at most 50 characters"),
+  role: z.enum(["NURSE", "LAB_TECHNICIAN"], { message: "Role is required." }),
+  phone: z
+    .string()
+    .min(10, "Contact must be 10-digits")
+    .max(10, "Contact must be 10-digits"),
+  email: z.string().email("Invalid email address."),
+  address: z
+    .string()
+    .min(5, "Address must be at least 5 characters")
+    .max(500, "Address must be at most 500 characters"),
+  license_number: z.string().optional(),
+  department: z.string().optional(),
+  img: z.string().optional(),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long!" })
+    .optional()
+    .or(z.literal("")),
+});
