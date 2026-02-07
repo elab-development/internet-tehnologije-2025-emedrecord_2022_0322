@@ -7,12 +7,14 @@ import { clerkClient } from "@clerk/nextjs/server";
 export async function deleteDataById(
   id: string,
 
-  deleteType: "doctor" | "staff" | "patient" 
+  deleteType: "doctor" | "staff" | "patient"
 ) {
   try {
     switch (deleteType) {
       case "doctor":
         await db.doctor.delete({ where: { id: id } });
+      case "staff":
+        await db.staff.delete({ where: { id: id } });
 
     }
 

@@ -9,6 +9,7 @@ import { FaQuestion } from 'react-icons/fa6';
 import { ProfileImage } from './profile-image';
 import { deleteDataById } from '@/app/actions/general';
 import { toast } from 'sonner';
+import { SmallCard } from './small-card';
 
 interface ActionDialogProps {
   type: "doctor" | "staff" | "delete";
@@ -93,7 +94,7 @@ export const ActionDialog = ({
     );
   }
 
-  if (type === "staff") {
+ if (type === "staff") {
     return (
       <Dialog>
         <DialogTrigger asChild>
@@ -132,8 +133,21 @@ export const ActionDialog = ({
 
           <div className="mt-10 space-y-6">
             <div className="flex flex-col md:flex-row md:flex-wrap md:items-center  gap-y-4 md:gap-x-0 xl:justify-between">
-        
+              <SmallCard label="Email Address" value={data?.email} />
+              <SmallCard label="Phone Number" value={data?.phone} />
+            </div>
 
+            <div>
+              <SmallCard label="Address" value={data?.address || "N/A"} />
+            </div>
+
+            <div className="flex flex-col md:flex-row md:flex-wrap md:items-center  gap-y-4 md:gap-x-0 xl:justify-between">
+              <SmallCard label="Role" value={data?.role} />
+              <SmallCard label="Department" value={data?.department || "N/A"} />
+              <SmallCard
+                label="License Number"
+                value={data?.license_number || "N/A"}
+              />
             </div>
           </div>
         </DialogContent>
