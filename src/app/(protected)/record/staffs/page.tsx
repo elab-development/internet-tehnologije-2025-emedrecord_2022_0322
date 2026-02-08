@@ -1,4 +1,5 @@
 import { ActionDialog } from '@/components/action-dialog';
+import { StaffForm } from '@/components/forms/staff-form';
 import { Pagination } from '@/components/pagination';
 import { ProfileImage } from '@/components/profile-image';
 import SearchInput from '@/components/search-input';
@@ -105,7 +106,7 @@ const StaffList = async (props: SearchParamsProps) => {
         </div>
         <div className="w-full lg:w-fit flex items-center justify-between lg:justify-start gap-2">
           <SearchInput />
-          {/* {isAdmin && <StaffForm />} */}
+          {isAdmin && <StaffForm />}
         </div>
       </div>
 
