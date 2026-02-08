@@ -1,5 +1,6 @@
 import { ActionDialog } from '@/components/action-dialog';
 import { ViewAction } from '@/components/action-options';
+import { DoctorForm } from '@/components/forms/doctor-form';
 import { Pagination } from '@/components/pagination';
 import { ProfileImage } from '@/components/profile-image';
 import SearchInput from '@/components/search-input';
@@ -105,7 +106,7 @@ const DoctorsList = async (props: SearchParamsProps) => {
         </div>
         <div className="w-full lg:w-fit flex items-center justify-between lg:justify-start gap-2">
           <SearchInput />
-          {/*{isAdmin && <DoctorForm />}*/}
+          {isAdmin && <DoctorForm />}
         </div>
       </div>
 
