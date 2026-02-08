@@ -34,7 +34,7 @@ export const ActionDialog = ({
         const res = await deleteDataById(id, deleteType!);
 
         if (res.success) {
-          toast.success("Record deleted successfully");
+          toast.success(res.message);
           router.refresh();
         } else {
           toast.error("Failed to delete record");

@@ -13,9 +13,13 @@ export async function deleteDataById(
     switch (deleteType) {
       case "doctor":
         await db.doctor.delete({ where: { id: id } });
+        break;
       case "staff":
         await db.staff.delete({ where: { id: id } });
-
+        break;
+      case "patient":
+        await db.patient.delete({ where: { id: id } });
+        break;
     }
 
     if (
@@ -23,8 +27,17 @@ export async function deleteDataById(
       deleteType === "patient" ||
       deleteType === "doctor"
     ) {
-      const client = await clerkClient();
-      await client.users.deleteUser(id);
+      try {
+        const client = await clerkClient();
+        await client.users.deleteUser(id);
+      } catch (clerkError) {
+        console.log("Clerk user deletion failed:", clerkError);
+        return {
+          success: true,
+          message: "Record deleted successfully",
+          status: 200,
+        };
+      }
     }
 
     return {
