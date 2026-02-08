@@ -1,3 +1,5 @@
+
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -5,6 +7,8 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+
 
 enum Role {
   ADMIN
@@ -38,6 +42,18 @@ enum AppointmentStatus {
   COMPLETED
 }
 
+enum PaymentMethod {
+  CASH
+  CARD
+}
+
+enum PaymentStatus {
+  PAID
+  UNPAID
+  PART
+}
+
+
 model Patient {
   id                       String   @id //clerk userId
   first_name               String
@@ -65,6 +81,7 @@ model Patient {
 
   appointments             Appointment[]
   medical                  MedicalRecords[]
+  payments                 Payment[]
   ratings                  Rating[]
 
   created_at               DateTime @default(now())
@@ -88,12 +105,14 @@ model Doctor {
   working_days          WorkingDays[]
   appointments          Appointment[]
   ratings               Rating[]
-  diagnosis             Diagnosis[]
+  diagnosis             Diagnosis[] 
   nurses                Staff[]
+
 
   created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt
 }
+
 
 model WorkingDays {
   id              Int   @id @default(autoincrement())
@@ -107,6 +126,7 @@ model WorkingDays {
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
 }
+
 
 model Staff {
   id             String   @id
@@ -138,8 +158,9 @@ model Appointment {
   type              String
   note              String?
   patient           Patient  @relation(fields: [patient_id], references: [id], onDelete: Cascade)
-  doctor            Doctor   @relation(fields: [doctor_id], references: [id], onDelete: Cascade)
+  doctor            Doctor   @relation(fields: [doctor_id], references: [id],  onDelete:  Cascade)
 
+  bills             Payment[]
   medical           MedicalRecords[]
 
   reason            String?
@@ -147,20 +168,58 @@ model Appointment {
   updated_at        DateTime @updatedAt
 }
 
+model Payment {
+  id              Int   @id @default(autoincrement())
+  bill_id         Int?
+  patient_id      String
+  appointment_id  Int @unique
+  bill_date       DateTime
+  payment_date    DateTime
+  discount        Float
+  total_amount    Float
+  amount_paid     Float
+
+  payment_method  PaymentMethod @default(CASH)
+  status          PaymentStatus @default(UNPAID)
+  receipt_number  Int @default(autoincrement())
+
+  appointment     Appointment @relation(fields: [appointment_id], references: [id], onDelete: Cascade)
+  patient         Patient  @relation(fields: [patient_id], references: [id], onDelete: Cascade)
+  bills           PatientBills[]
+
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+}
+
+model PatientBills {
+  id              Int   @id @default(autoincrement())
+  bill_id         Int
+  service_id      Int
+  service_date    DateTime
+  quantity        Int
+  unit_cost       Float
+  total_cost      Float
+  service         Services @relation(fields: [service_id], references: [id])
+  payment         Payment @relation(fields: [bill_id], references: [id], onDelete: Cascade)
+
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+}
+
 model LabTest {
-  id             Int   @id @default(autoincrement())
-  record_id      Int
-  test_date      DateTime
-  result         String
-  status         String
-  notes          String?
-  service_id     Int @unique
-  services       Services @relation(fields: [service_id], references: [id])
+  id            Int   @id @default(autoincrement())
+  record_id     Int
+  test_date     DateTime
+  result        String
+  status        String
+  notes         String?
+  service_id    Int @unique
+  services      Services @relation(fields: [service_id], references: [id])
 
   medical_record MedicalRecords  @relation(fields: [record_id], references: [id], onDelete: Cascade)
 
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
 }
 
 model MedicalRecords {
@@ -189,12 +248,12 @@ model VitalSigns {
   patient_id        String
   medical_id        Int  
   medical           MedicalRecords @relation(fields: [medical_id], references: [id], onDelete: Cascade)
-  body_temperature  Float    
+  body_temperature   Float    
   systolic          Int       
   diastolic         Int     
   heartRate         String      
-  respiratory_rate  Int?       
-  oxygen_saturation Int?     
+  respiratory_rate   Int?       
+  oxygen_saturation  Int?     
   weight            Float     
   height            Float     
 
@@ -203,21 +262,21 @@ model VitalSigns {
 }
 
 model Diagnosis {
-  id                     Int      @id @default(autoincrement())
-  patient_id             String
-  medical_id             Int
-  doctor_id              String
-  doctor                 Doctor    @relation(fields: [doctor_id], references: [id])
-  symptoms               String    
-  diagnosis              String    
-  notes                  String?   
+  id              Int      @id @default(autoincrement())
+  patient_id      String
+  medical_id      Int
+  doctor_id       String
+  doctor          Doctor    @relation(fields: [doctor_id], references: [id])
+  symptoms        String    
+  diagnosis       String    
+  notes           String?   
   prescribed_medications String?   
-  follow_up_plan         String?
+  follow_up_plan   String?
 
-  medical                MedicalRecords @relation(fields: [medical_id], references: [id], onDelete: Cascade)
+  medical          MedicalRecords @relation(fields: [medical_id ], references: [id], onDelete: Cascade)
 
-  created_at             DateTime  @default(now())
-  updated_at             DateTime  @updatedAt
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
 }
 
 model AuditLog {
@@ -247,12 +306,13 @@ model Rating {
 }
 
 model Services {
-  id           Int    @id @default(autoincrement())
-  service_name String
-  description  String
-  price        Float
-  labtest      LabTest?
+  id             Int    @id @default(autoincrement())
+  service_name    String
+  description     String
+  price           Float
+  labtest         LabTest?
+  bills           PatientBills[]
 
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
 }
