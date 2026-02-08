@@ -5,7 +5,7 @@ import { ProfileImage } from "@/components/profile-image";
 import SearchInput from "@/components/search-input";
 import { Table } from "@/components/tables/table";
 import { Button } from "@/components/ui/button";
-import { SearchParamsProps } from "@/types/intex";
+import { SearchParamsProps } from "@/types";
 import { calculateAge } from "@/utils";
 import { checkRole } from "@/utils/roles";
 import { DATA_LIMIT } from "@/utils/seetings";
