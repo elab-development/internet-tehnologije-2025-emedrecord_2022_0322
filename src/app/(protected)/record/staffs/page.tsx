@@ -4,7 +4,7 @@ import { Pagination } from '@/components/pagination';
 import { ProfileImage } from '@/components/profile-image';
 import SearchInput from '@/components/search-input';
 import { Table } from '@/components/tables/table';
-import { SearchParamsProps } from '@/types/intex';
+import { SearchParamsProps } from '@/types';
 import { checkRole } from '@/utils/roles';
 import { DATA_LIMIT } from '@/utils/seetings';
 import { getAllStaff } from '@/utils/services/staff';

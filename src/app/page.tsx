@@ -27,8 +27,8 @@ export default async function Home() {
 
         <div className="text-center max-w-xl flex flex-col items-center justify-center">
           <p className="mb-8">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse maxime
-            quae numquam possimus dolor. Illum, ipsam laudantium. Reprehenderit
+           "Your complete solution for managing medical records, appointments, and patient care. 
+            Secure, efficient, and designed for healthcare professionals and patients alike."
           </p>
 
           <div className="flex gap-4">
