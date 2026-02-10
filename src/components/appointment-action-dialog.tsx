@@ -65,7 +65,7 @@ export const AppointmentActionDialog = ({
 
   return (
     <Dialog>
-      <DialogTrigger asChild disabled={!disabled}>
+      <DialogTrigger asChild disabled={disabled}>
         {type === "approve" ? (
           <Button size="sm" variant="ghost" className="w-full justify-start">
             <Check size={16} /> Approve
@@ -101,7 +101,7 @@ export const AppointmentActionDialog = ({
           </span>
           <p className="text-sm text-center text-gray-500">
             {type === "approve" 
-              ? "You're about to confirmed this appointment. Yes to approve or No to cancel."
+              ? "You're about to confirm this appointment. Confirm to approve or No to cancel."
               : "Are you sure you want to cancel this appointment?"}
           </p>
 
@@ -126,7 +126,7 @@ export const AppointmentActionDialog = ({
                   : "bg-destructive hover:bg-destructive"
               )}
             >
-              Yes, {type === "approve" ? "Approve" : "Delete"}
+              Yes, {type === "approve" ? "Approve" : "Cancel"}
             </Button>
             <DialogClose asChild>
               <Button
