@@ -134,3 +134,21 @@ export const StaffSchema = z.object({
     .optional()
     .or(z.literal("")),
 });
+export const VitalSignsSchema = z.object({
+  patient_id: z.string(),
+  medical_id: z.string(),
+  body_temperature: z.coerce.number({
+    message: "Enter recorded body temperature",
+  }),
+  heartRate: z.string({ message: "Enter recorded heartbeat rate" }),
+  systolic: z.coerce.number({
+    message: "Enter recorded systolic blood pressure",
+  }),
+  diastolic: z.coerce.number({
+    message: "Enter recorded diastolic blood pressure",
+  }),
+  respiratory_rate: z.coerce.number().optional(),
+  oxygen_saturation: z.coerce.number().optional(),
+  weight: z.coerce.number({ message: "Enter recorded weight (Kg)" }),
+  height: z.coerce.number({ message: "Enter recorded height (Cm)" }),
+});

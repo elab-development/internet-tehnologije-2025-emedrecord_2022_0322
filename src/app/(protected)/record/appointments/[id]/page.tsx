@@ -1,7 +1,9 @@
 import { AppointmentContainer } from "@/components/appointment-container";
+import { AppointmentDetails } from "@/components/appointment/appointment-details";
 import AppointmentQuickLinks from "@/components/appointment/appointment-quick-links";
 import ChartContainer from "@/components/appointment/chart-container";
 import { PatientDetailsCard } from "@/components/appointment/patient-details-card";
+import { VitalSigns } from "@/components/appointment/vital-signs";
 import { MedicalHistory } from "@/components/medical-history";
 import { getAppointmentWithMedicalRecordsById } from "@/utils/services/appointment";
 
@@ -21,13 +23,20 @@ const AppointmentPage = async({
     <div className="flex p-6 flex-col-reverse lg:flex-row w-full min-h-screen gap-10">
         {/* Left side */}
         <div className="w-full lg:w-[65%] flex-1 flex-col gap-6">
-            {cat ==="charts" && <ChartContainer id={Number(id)}/>}
-            {/* {cat === "appointments" && 
+            {cat ==="charts" && <ChartContainer id={data?.patient_id!}/>}
+            {cat === "appointments" && 
             
             <>
-            <AppointmentContainer/>
+            <AppointmentDetails 
+            id={data?.id!}
+            patient_id={data?.patient_id!}
+            appointment_date={data?.appointment_date!}
+            time={data?.time!}
+            notes={data?.note!}
+             />
+             <VitalSigns id={id} patientId={data?.patient_id!} doctorId={data?.doctor_id!}/>
             </>
-            } */}
+            }
             {/* {cat === "diagnosis" && <DiagnosisContainer/>} */}
             {/* {cat === "biling" && <BillsContainer/>} */}
             {/* {cat === "medical-history" && <MedicalHistoryContainer/>} */}
