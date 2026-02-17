@@ -1,5 +1,7 @@
 import { AppointmentContainer } from "@/components/appointment-container";
 import AppointmentQuickLinks from "@/components/appointment/appointment-quick-links";
+import ChartContainer from "@/components/appointment/chart-container";
+import { PatientDetailsCard } from "@/components/appointment/patient-details-card";
 import { MedicalHistory } from "@/components/medical-history";
 import { getAppointmentWithMedicalRecordsById } from "@/utils/services/appointment";
 
@@ -18,8 +20,8 @@ const AppointmentPage = async({
   return (
     <div className="flex p-6 flex-col-reverse lg:flex-row w-full min-h-screen gap-10">
         {/* Left side */}
-        <div className="w-full lg:w-[65%] flex flex-col gap-6">
-            {/* {cat ==="charts" && <ChartContainer/>} */}
+        <div className="w-full lg:w-[65%] flex-1 flex-col gap-6">
+            {cat ==="charts" && <ChartContainer id={Number(id)}/>}
             {/* {cat === "appointments" && 
             
             <>
@@ -32,9 +34,9 @@ const AppointmentPage = async({
             {/* {cat == "payments" && <PaymentContainer/>} */}
         </div>
         {/* Right side */}
-        <div className="w-full lg:w-[35%] flex-1 space-y-6">
+        <div className="w-full lg:w-[35%] flex-1 space-y-10">
             {<AppointmentQuickLinks staffId={data?.doctor_id as string}/>}
-            {/* {<PatientDetailsCard data={data?.patient}/>} */}
+            {<PatientDetailsCard data={data?.patient!}/>}
         </div>
     </div>
   );

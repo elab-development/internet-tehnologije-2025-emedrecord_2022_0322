@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { checkRole } from "@/utils/roles";
-// import { ReviewForm } from "../dialogs/review-form";
+import { ReviewForm } from "../dialogs/review-form";
 
 const AppointmentQuickLinks = async ({ staffId }: { staffId: string }) => {
   const isPatient = await checkRole("PATIENT");
@@ -14,7 +14,7 @@ const AppointmentQuickLinks = async ({ staffId }: { staffId: string }) => {
       <CardContent className="flex flex-wrap gap-2">
         <Link
           href="?cat=charts"
-          className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600"
+          className="px-4 py-2 rounded-lg bg-blue-100 text-gray-600"
         >
           Charts
         </Link>
@@ -34,7 +34,7 @@ const AppointmentQuickLinks = async ({ staffId }: { staffId: string }) => {
 
         <Link
           href="?cat=billing"
-          className="px-4 py-2 rounded-lg bg-green-100 text-green-600"
+          className="px-4 py-2 rounded-lg bg-brown-300 text-green-600"
         >
           Bills
         </Link>
@@ -48,7 +48,7 @@ const AppointmentQuickLinks = async ({ staffId }: { staffId: string }) => {
 
         <Link
           href="?cat=payments"
-          className="px-4 py-2 rounded-lg bg-purple-100 text-purple-600"
+          className="px-4 py-2 rounded-lg bg-yellow-100 text-purple-600"
         >
           Payments
         </Link>
@@ -67,7 +67,7 @@ const AppointmentQuickLinks = async ({ staffId }: { staffId: string }) => {
           Vital Signs
         </Link>
 
-        {/* {!isPatient && <ReviewForm staffId={staffId} />} */}
+        {!isPatient && <ReviewForm staffId={staffId} />}
       </CardContent>
     </Card>
   );
