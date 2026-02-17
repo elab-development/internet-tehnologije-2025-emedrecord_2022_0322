@@ -12,7 +12,7 @@ export const PatientDetailsCard = ({ data }: { data: Patient }) => {
         <CardTitle>Patient Details</CardTitle>
         <div className="relative size-20 xl:size-24 rounded-full overflow-hidden">
           <Image
-            src={data.img || "/profile.png"}
+            src={data.img || "/profile.svg"}
             alt={data?.first_name}
             width={100}
             height={100}

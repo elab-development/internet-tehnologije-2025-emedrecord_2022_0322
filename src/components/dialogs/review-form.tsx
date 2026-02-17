@@ -118,7 +118,7 @@ export const ReviewForm = ({ staffId }: { staffId: string }) => {
                               size={30}
                               className={cn(
                                 star <= field.value
-                                  ? "text-yellow-500 fill-yellow-500"
+                                  ? "text-red-500 fill-red-1000"
                                   : "text-gray-400"
                               )}
                             />

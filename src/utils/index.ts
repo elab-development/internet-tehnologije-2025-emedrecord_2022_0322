@@ -110,3 +110,31 @@ export function generateTimes(
 
   return times;
 }
+export const calculateBMI = (weight: number, height: number) => {
+  const heightInMeters = height / 100;
+
+  const bmi = weight / (heightInMeters * heightInMeters);
+
+  let status: string;
+  let colorCode: string;
+
+  if (bmi < 18.5) {
+    status = "Underweight";
+    colorCode = "#1E90FF";
+  } else if (bmi >= 18.5 && bmi <= 24.9) {
+    status = "Normal";
+    colorCode = "#1E90FF";
+  } else if (bmi >= 25 && bmi <= 29.9) {
+    status = "Overweight";
+    colorCode = "#FF9800";
+  } else {
+    status = "Obesity";
+    colorCode = "#FF5722";
+  }
+
+  return {
+    bmi: parseFloat(bmi.toFixed(2)),
+    status,
+    colorCode,
+  };
+};
