@@ -2,7 +2,6 @@
 
 import { addVitalSigns } from "@/app/actions/appointment";
 import { VitalSignsSchema } from "@/lib/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -20,6 +19,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Form } from "../ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface AddVitalSignsProps {
   patientId: string;
@@ -39,7 +39,7 @@ export const AddVitalSigns = ({
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const form = useForm<VitalSignsFormData>({
+  const form = useForm({
     resolver: zodResolver(VitalSignsSchema),
     defaultValues: {
       patient_id: patientId,
@@ -53,7 +53,7 @@ export const AddVitalSigns = ({
       weight: undefined,
       height: undefined,
     },
-  });
+  }) as ReturnType<typeof useForm<VitalSignsFormData>>;
 
   const handleOnSubmit = async (data: VitalSignsFormData) => {
     try {

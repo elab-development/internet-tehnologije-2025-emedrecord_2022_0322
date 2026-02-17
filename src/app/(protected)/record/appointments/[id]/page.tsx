@@ -18,7 +18,7 @@ const AppointmentPage = async({
   const search = await searchParams;
   const cat = (search?.cat as string) || "charts";
   const {data} = await getAppointmentWithMedicalRecordsById(Number(id));
-  console.log("Appointment data:", data);
+  
   return (
     <div className="flex p-6 flex-col-reverse lg:flex-row w-full min-h-screen gap-10">
         {/* Left side */}

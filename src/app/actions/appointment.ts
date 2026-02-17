@@ -68,7 +68,7 @@ export async function addVitalSigns(
 ) {
   try {
     const { userId } = await auth();
-
+    
     if (!userId) {
       return { success: false, msg: "Unauthorized" };
     }
