@@ -171,3 +171,13 @@ export const PatientBillSchema = z.object({
   unit_cost: z.string({ message: "Unit cost is required" }),
   total_cost: z.string({ message: "Total cost is required" }),
 });
+export const PaymentSchema = z.object({
+  id: z.string(),
+  // patient_id: z.string(),
+  // appointment_id: z.string(),
+  bill_date: z.coerce.date(),
+  // payment_date: z.string(),
+  discount: z.string({ message: "discount" }),
+  total_amount: z.string(),
+  // amount_paid: z.string(),
+});
