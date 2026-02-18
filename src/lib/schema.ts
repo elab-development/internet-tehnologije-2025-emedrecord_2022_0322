@@ -152,3 +152,13 @@ export const VitalSignsSchema = z.object({
   weight: z.coerce.number({ message: "Enter recorded weight (Kg)" }),
   height: z.coerce.number({ message: "Enter recorded height (Cm)" }),
 });
+export const DiagnosisSchema = z.object({
+  patient_id: z.string(),
+  medical_id: z.string(),
+  doctor_id: z.string(),
+  symptoms: z.string({ message: "Symptoms required" }),
+  diagnosis: z.string({ message: "Diagnosis required" }),
+  notes: z.string().optional(),
+  prescribed_medications: z.string().optional(),
+  follow_up_plan: z.string().optional(),
+});
