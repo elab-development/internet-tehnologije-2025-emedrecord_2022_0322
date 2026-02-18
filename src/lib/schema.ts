@@ -181,3 +181,8 @@ export const PaymentSchema = z.object({
   total_amount: z.string(),
   // amount_paid: z.string(),
 });
+export const ServicesSchema = z.object({
+  service_name: z.string({ message: "Service name is required" }),
+  price: z.string({ message: "Service price is required" }),
+  description: z.string({ message: "Service description is required" }),
+});
