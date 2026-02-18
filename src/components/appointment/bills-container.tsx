@@ -3,14 +3,13 @@ import { calculateDiscount } from "@/utils";
 import { checkRole } from "@/utils/roles";
 import { ReceiptText } from "lucide-react";
 import { Table } from "../tables/table";
-import { PatientBills } from "@prisma/client";
+// import { PatientBills } from "@prisma/client";
 import { format, formatDate } from "date-fns";
 import { ActionDialog } from "../action-dialog";
 import { Separator } from "../ui/separator";
-
-import { GenerateFinalBills } from "./generate-final-bill";
 import { db } from "@/lib/prisma";
 import { AddBills } from "../dialogs/add-bills";
+import { GenerateFinalBills } from "./generate-final-bill";
 
 const columns = [
   {
@@ -49,12 +48,12 @@ const columns = [
   },
 ];
 
-interface ExtendedBillProps extends PatientBills {
-  service: {
-    service_name: string;
-    id: number;
-  };
-}
+// interface ExtendedBillProps extends PatientBills {
+//   service: {
+//     service_name: string;
+//     id: number;
+//   };
+// }
 export const BillsContainer = async ({ id }: { id: string }) => {
   const [data, servicesData] = await Promise.all([
     db.payment.findFirst({

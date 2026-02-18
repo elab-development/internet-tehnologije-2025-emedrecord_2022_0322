@@ -5,8 +5,8 @@ import { db } from "@/lib/prisma";
 
 import {
   DiagnosisSchema,
-//   PatientBillSchema,
-//   PaymentSchema,
+  PatientBillSchema,
+  PaymentSchema,
 } from "@/lib/schema";
 import { checkRole } from "@/utils/roles";
 

@@ -5,6 +5,7 @@ import { BillsContainer } from "@/components/appointment/bills-container";
 import ChartContainer from "@/components/appointment/chart-container";
 import { DiagnosisContainer } from "@/components/appointment/diagnosis-container";
 import { PatientDetailsCard } from "@/components/appointment/patient-details-card";
+import { PaymentsContainer } from "@/components/appointment/payment-container";
 import { VitalSigns } from "@/components/appointment/vital-signs";
 import { MedicalHistory } from "@/components/medical-history";
 import { MedicalHistoryContainer } from "@/components/medical-history-container";
@@ -43,7 +44,7 @@ const AppointmentPage = async({
             {cat === "diagnosis" && <DiagnosisContainer id={id} patientId={data?.patient_id!} doctorId={data?.doctor_id!}/>}
             {cat === "biling" && <BillsContainer id={id}/>}
             {cat === "medical-history" && <MedicalHistoryContainer id={id} patientId={data?.patient_id!}/>}
-            {/* {cat == "payments" && <PaymentContainer/>} */}
+            {cat == "payments" && <PaymentsContainer patientId={data?.patient_id!}/>}
         </div>
         {/* Right side */}
         <div className="w-full lg:w-[35%] flex-1 space-y-10">
