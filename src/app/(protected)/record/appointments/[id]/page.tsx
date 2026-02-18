@@ -2,6 +2,7 @@ import { AppointmentContainer } from "@/components/appointment-container";
 import { AppointmentDetails } from "@/components/appointment/appointment-details";
 import AppointmentQuickLinks from "@/components/appointment/appointment-quick-links";
 import ChartContainer from "@/components/appointment/chart-container";
+import { DiagnosisContainer } from "@/components/appointment/diagnosis-container";
 import { PatientDetailsCard } from "@/components/appointment/patient-details-card";
 import { VitalSigns } from "@/components/appointment/vital-signs";
 import { MedicalHistory } from "@/components/medical-history";
@@ -37,7 +38,7 @@ const AppointmentPage = async({
              <VitalSigns id={id} patientId={data?.patient_id!} doctorId={data?.doctor_id!}/>
             </>
             }
-            {/* {cat === "diagnosis" && <DiagnosisContainer/>} */}
+            {cat === "diagnosis" && <DiagnosisContainer id={id} patientId={data?.patient_id!} doctorId={data?.doctor_id!}/>}
             {/* {cat === "biling" && <BillsContainer/>} */}
             {/* {cat === "medical-history" && <MedicalHistoryContainer/>} */}
             {/* {cat == "payments" && <PaymentContainer/>} */}
