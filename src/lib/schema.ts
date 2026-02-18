@@ -162,3 +162,12 @@ export const DiagnosisSchema = z.object({
   prescribed_medications: z.string().optional(),
   follow_up_plan: z.string().optional(),
 });
+export const PatientBillSchema = z.object({
+  bill_id: z.string(),
+  service_id: z.string(),
+  service_date: z.string(),
+  appointment_id: z.string(),
+  quantity: z.string({ message: "Quantity is required" }),
+  unit_cost: z.string({ message: "Unit cost is required" }),
+  total_cost: z.string({ message: "Total cost is required" }),
+});
