@@ -52,8 +52,8 @@ export const GenerateFinalBills = ({ id, total_bill }: DataProps) => {
         router.refresh();
 
         form.reset();
-      } else if (resp.error) {
-        toast.error(resp.msg);
+      } else {
+        toast.error(resp.msg || "Failed to generate bill");
       }
     } catch (error) {
       console.log(error);
@@ -62,6 +62,14 @@ export const GenerateFinalBills = ({ id, total_bill }: DataProps) => {
       setIsLoading(false);
     }
   };
+  if (!id) {
+    return (
+      <Button variant="outline" size="sm" className="text-sm font-normal" disabled>
+        <Plus size={22} className="text-gray-400" />
+        Generate Final Bill
+      </Button>
+    );
+  }
 
   return (
     <>

@@ -1,4 +1,3 @@
-
 import { calculateDiscount } from "@/utils";
 import { checkRole } from "@/utils/roles";
 import { ReceiptText } from "lucide-react";
@@ -10,6 +9,7 @@ import { Separator } from "../ui/separator";
 import { db } from "@/lib/prisma";
 import { AddBills } from "../dialogs/add-bills";
 import { GenerateFinalBills } from "./generate-final-bill";
+import { MakePaymentDialog } from "../dialogs/make-payment";
 
 const columns = [
   {
@@ -129,10 +129,18 @@ export const BillsContainer = async ({ id }: { id: string }) => {
         </div>
 
         {((await checkRole("ADMIN")) || (await checkRole("DOCTOR"))) && (
-          <div className="flex items-center mt-5 justify-end">
+          <div className="flex items-center gap-2 mt-5 justify-end flex-wrap">
             <AddBills id={data?.id} appId={id} servicesData={servicesData} />
 
             <GenerateFinalBills id={data?.id} total_bill={totalBills} />
+
+            {data?.id && data?.total_amount > 0 && (
+              <MakePaymentDialog
+                paymentId={data.id}
+                totalPayable={data.total_amount - data.discount}
+                amountPaid={data.amount_paid}
+              />
+            )}
           </div>
         )}
       </div>

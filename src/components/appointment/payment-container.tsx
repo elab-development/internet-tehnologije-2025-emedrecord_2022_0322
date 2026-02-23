@@ -6,6 +6,7 @@ import { ViewAction } from "../action-options";
 import { checkRole } from "@/utils/roles";
 import { ActionDialog } from "../action-dialog";
 import { db } from "@/lib/prisma";
+import { MakePaymentDialog } from "../dialogs/make-payment";
 
 const columns = [
   {
@@ -59,6 +60,8 @@ export const PaymentsContainer = async ({
 
   if (!data) return null;
   const isAdmin = await checkRole("ADMIN");
+  const isDoctor = await checkRole("DOCTOR");
+  const isPatient = await checkRole("PATIENT");
 
   const renderRow = (item: Payment) => {
     return (
@@ -82,10 +85,19 @@ export const PaymentsContainer = async ({
         <td className="hidden xl:table-cell">{item?.amount_paid.toFixed(2)}</td>
 
         <td className="">
-          <div className="flex items-center">
-            <ViewAction
-              href={`/record/appointments/${item?.appointment_id}?cat=bills`}
-            />
+          <div className="flex items-center gap-2">
+            {(isAdmin || isDoctor) && (
+              <ViewAction
+                href={`/record/appointments/${item?.appointment_id}?cat=bills`}
+              />
+            )}
+            {(isAdmin || isDoctor || isPatient) && (
+              <MakePaymentDialog
+                paymentId={item.id}
+                totalPayable={item.total_amount - item.discount}
+                amountPaid={item.amount_paid}
+              />
+            )}
             {isAdmin && (
               <ActionDialog
                 type="delete"
