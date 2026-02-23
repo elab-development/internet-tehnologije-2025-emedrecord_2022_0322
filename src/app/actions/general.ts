@@ -24,6 +24,9 @@ export async function deleteDataById(
       case "payment":
         await db.payment.delete({ where: { id: Number(id) } });
         break;
+      case "bill":
+        await db.patientBills.delete({ where: { id: Number(id) } });
+        break;
     }
 
     if (
