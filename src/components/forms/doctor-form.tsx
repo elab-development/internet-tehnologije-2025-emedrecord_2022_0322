@@ -77,8 +77,8 @@ export const DoctorForm = () => {
         setWorkSchedule([]);
         form.reset();
         router.refresh();
-      } else if (resp.error) {
-        toast.error(resp.message);
+      } else {
+        toast.error(resp.message || "Failed to add doctor");
       }
     } catch (error) {
       console.log(error);
@@ -100,7 +100,7 @@ export const DoctorForm = () => {
         form.setValue("department", department.department);
       }
     }
-  }, [selectedSpecialization]);
+  }, [selectedSpecialization, form]);
 
   return (
     <Sheet>

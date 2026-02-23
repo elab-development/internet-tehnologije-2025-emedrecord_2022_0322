@@ -24,13 +24,24 @@ export async function createNewDoctor(data: any) {
     const validatedValues = values.data;
     const workingDayData = workingDaysValues.data!;
 
+    if (!validatedValues.password) {
+      return {
+        success: false,
+        error: true,
+        message: "Password is required",
+      };
+    }
+
+    const [firstName, ...restNames] = validatedValues.name.trim().split(" ");
+    const lastName = restNames.join(" ") || "Doctor";
+
     const client = await clerkClient();
 
     const user = await client.users.createUser({
       emailAddress: [validatedValues.email],
       password: validatedValues.password,
-      firstName: validatedValues.name.split(" ")[0],
-      lastName: validatedValues.name.split(" ")[1],
+      firstName,
+      lastName,
       publicMetadata: { role: "doctor" },
     });
 

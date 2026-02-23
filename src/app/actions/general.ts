@@ -8,7 +8,7 @@ import { clerkClient } from "@clerk/nextjs/server";
 export async function deleteDataById(
   id: string,
 
-  deleteType: "doctor" | "staff" | "patient" | "payment"
+  deleteType: "doctor" | "staff" | "patient" | "payment" | "bill"
 ) {
   try {
     switch (deleteType) {
