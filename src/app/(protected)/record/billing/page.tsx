@@ -88,7 +88,7 @@ const BillingPage = async (props: SearchParamsProps) => {
 
     return (
       <tr
-        key={item?.id + patient?.id}
+        key={`payment-${item?.id}`}
         className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-slate-50"
       >
         <td># {item?.id}</td>
@@ -133,17 +133,19 @@ const BillingPage = async (props: SearchParamsProps) => {
         </td>
 
         <td>
-          <ViewAction
-            href={`/appointments/${item?.appointment_id}?cat=bills`}
-          />
-
-          {isAdmin && (
-            <ActionDialog
-              type="delete"
-              deleteType="payment"
-              id={item?.id.toString()}
+          <div className="flex items-center gap-2">
+            <ViewAction
+              href={`/record/appointments/${item?.appointment_id}?cat=bills`}
             />
-          )}
+
+            {isAdmin && (
+              <ActionDialog
+                type="delete"
+                deleteType="payment"
+                id={item?.id.toString()}
+              />
+            )}
+          </div>
         </td>
       </tr>
     );

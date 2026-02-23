@@ -1,4 +1,3 @@
-
 import { calculateDiscount } from "@/utils";
 import { checkRole } from "@/utils/roles";
 import { ReceiptText } from "lucide-react";
@@ -10,6 +9,7 @@ import { Separator } from "../ui/separator";
 import { db } from "@/lib/prisma";
 import { AddBills } from "../dialogs/add-bills";
 import { GenerateFinalBills } from "./generate-final-bill";
+import { MakePaymentDialog } from "../dialogs/make-payment";
 
 const columns = [
   {
@@ -71,6 +71,10 @@ export const BillsContainer = async ({ id }: { id: string }) => {
     db.services.findMany(),
   ]);
 
+  const isAdmin = await checkRole("ADMIN");
+  const isDoctor = await checkRole("DOCTOR");
+  const canDeleteBills = isAdmin || isDoctor;
+
   let totalBills = 0;
 
   const billData = data?.bills || [];
@@ -104,11 +108,13 @@ export const BillsContainer = async ({ id }: { id: string }) => {
         <td>{item?.total_cost.toFixed(2)}</td>
 
         <td className="hidden xl:table-cell">
-          <ActionDialog
-            type="delete"
-            id={item?.id.toString()}
-            deleteType="bill"
-          />
+          {canDeleteBills && (
+            <ActionDialog
+              type="delete"
+              id={item?.id.toString()}
+              deleteType="bill"
+            />
+          )}
         </td>
       </tr>
     );
@@ -128,11 +134,19 @@ export const BillsContainer = async ({ id }: { id: string }) => {
           </div>
         </div>
 
-        {((await checkRole("ADMIN")) || (await checkRole("DOCTOR"))) && (
-          <div className="flex items-center mt-5 justify-end">
+        {canDeleteBills && (
+          <div className="flex items-center gap-2 mt-5 justify-end flex-wrap">
             <AddBills id={data?.id} appId={id} servicesData={servicesData} />
 
             <GenerateFinalBills id={data?.id} total_bill={totalBills} />
+
+            {data?.id && data?.total_amount > 0 && (
+              <MakePaymentDialog
+                paymentId={data.id}
+                totalPayable={data.total_amount - data.discount}
+                amountPaid={data.amount_paid}
+              />
+            )}
           </div>
         )}
       </div>

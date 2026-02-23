@@ -9,6 +9,7 @@ import {
   PaymentSchema,
 } from "@/lib/schema";
 import { checkRole } from "@/utils/roles";
+import { auth } from "@clerk/nextjs/server";
 
 export const addDiagnosis = async (
   data: DiagnosisFormData,
@@ -63,6 +64,13 @@ export async function addNewBill(data: any) {
     }
 
     const isValidData = PatientBillSchema.safeParse(data);
+
+    if (!isValidData.success) {
+      return {
+        success: false,
+        msg: "Invalid data provided",
+      };
+    }
 
     const validatedData = isValidData.data;
     let bill_info = null;
@@ -128,19 +136,70 @@ export async function generateBill(data: any) {
   try {
     const isValidData = PaymentSchema.safeParse(data);
 
+    if (!isValidData.success) {
+      return {
+        success: false,
+        error: true,
+        msg: "Invalid data provided",
+      };
+    }
+
     const validatedData = isValidData.data;
 
-    const discountAmount =
-      (Number(validatedData?.discount) / 100) *
-      Number(validatedData?.total_amount);
+    if (!validatedData.id) {
+      return {
+        success: false,
+        error: true,
+        msg: "No bill record found. Please add services first.",
+      };
+    }
+
+    const payment = await db.payment.findUnique({
+      where: { id: Number(validatedData.id) },
+      include: { bills: true },
+    });
+
+    if (!payment) {
+      return {
+        success: false,
+        error: true,
+        msg: "Payment record not found",
+      };
+    }
+
+    if (!payment.bills.length) {
+      return {
+        success: false,
+        error: true,
+        msg: "No services added for this appointment",
+      };
+    }
+
+    const totalAmount = payment.bills.reduce(
+      (sum, bill) => sum + bill.total_cost,
+      0
+    );
+
+    const discountPercent = Number(validatedData.discount) || 0;
+    const discountAmount = (discountPercent / 100) * totalAmount;
+    const totalPayable = totalAmount - discountAmount;
+    const adjustedAmountPaid = Math.min(payment.amount_paid, totalPayable);
+    const status =
+      adjustedAmountPaid >= totalPayable
+        ? "PAID"
+        : adjustedAmountPaid > 0
+        ? "PART"
+        : "UNPAID";
 
     const res = await db.payment.update({
       data: {
-        bill_date: validatedData?.bill_date,
+        bill_date: validatedData.bill_date,
         discount: discountAmount,
-        total_amount: Number(validatedData?.total_amount)!,
+        total_amount: totalAmount,
+        amount_paid: adjustedAmountPaid,
+        status,
       },
-      where: { id: Number(validatedData?.id) },
+      where: { id: Number(validatedData.id) },
     });
 
     await db.appointment.update({
@@ -153,6 +212,91 @@ export async function generateBill(data: any) {
       success: true,
       error: false,
       msg: `Bill generated successfully`,
+    };
+  } catch (error) {
+    console.log(error);
+    return { success: false, msg: "Internal Server Error" };
+  }
+}
+
+export async function makePayment(data: {
+  paymentId: number;
+  amount: number;
+  paymentMethod?: "CASH" | "CARD";
+}) {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return { success: false, msg: "Unauthorized" };
+    }
+
+    const isAdmin = await checkRole("ADMIN");
+    const isDoctor = await checkRole("DOCTOR");
+    const isPatient = await checkRole("PATIENT");
+
+    if (!isAdmin && !isDoctor && !isPatient) {
+      return {
+        success: false,
+        msg: "You are not authorized to record payments",
+      };
+    }
+
+    const payment = await db.payment.findUnique({
+      where: { id: data.paymentId },
+    });
+
+    if (!payment) {
+      return {
+        success: false,
+        msg: "Payment record not found",
+      };
+    }
+
+    if (isPatient && payment.patient_id !== userId) {
+      return {
+        success: false,
+        msg: "Unauthorized",
+      };
+    }
+
+    if (data.amount <= 0) {
+      return {
+        success: false,
+        msg: "Payment amount must be greater than 0",
+      };
+    }
+
+    const totalPayable = payment.total_amount - payment.discount;
+    const newAmountPaid = payment.amount_paid + data.amount;
+
+    if (newAmountPaid > totalPayable) {
+      return {
+        success: false,
+        msg: `Payment exceeds the payable amount. Maximum: ${(totalPayable - payment.amount_paid).toFixed(2)}`,
+      };
+    }
+
+    const newStatus = newAmountPaid >= totalPayable 
+      ? "PAID" 
+      : newAmountPaid > 0 
+        ? "PART" 
+        : "UNPAID";
+
+    await db.payment.update({
+      where: { id: data.paymentId },
+      data: {
+        amount_paid: newAmountPaid,
+        payment_date: new Date(),
+        payment_method: data.paymentMethod || "CASH",
+        status: newStatus,
+      },
+    });
+
+    return {
+      success: true,
+      error: false,
+      msg: `Payment of ${data.amount.toFixed(2)} recorded successfully`,
     };
   } catch (error) {
     console.log(error);
