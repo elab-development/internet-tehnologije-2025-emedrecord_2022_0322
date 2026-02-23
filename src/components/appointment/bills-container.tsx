@@ -71,6 +71,10 @@ export const BillsContainer = async ({ id }: { id: string }) => {
     db.services.findMany(),
   ]);
 
+  const isAdmin = await checkRole("ADMIN");
+  const isDoctor = await checkRole("DOCTOR");
+  const canDeleteBills = isAdmin || isDoctor;
+
   let totalBills = 0;
 
   const billData = data?.bills || [];
@@ -104,11 +108,13 @@ export const BillsContainer = async ({ id }: { id: string }) => {
         <td>{item?.total_cost.toFixed(2)}</td>
 
         <td className="hidden xl:table-cell">
-          <ActionDialog
-            type="delete"
-            id={item?.id.toString()}
-            deleteType="bill"
-          />
+          {canDeleteBills && (
+            <ActionDialog
+              type="delete"
+              id={item?.id.toString()}
+              deleteType="bill"
+            />
+          )}
         </td>
       </tr>
     );
@@ -128,7 +134,7 @@ export const BillsContainer = async ({ id }: { id: string }) => {
           </div>
         </div>
 
-        {((await checkRole("ADMIN")) || (await checkRole("DOCTOR"))) && (
+        {canDeleteBills && (
           <div className="flex items-center gap-2 mt-5 justify-end flex-wrap">
             <AddBills id={data?.id} appId={id} servicesData={servicesData} />
 
