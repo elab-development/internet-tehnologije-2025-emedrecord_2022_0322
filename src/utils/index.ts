@@ -138,3 +138,46 @@ export const calculateBMI = (weight: number, height: number) => {
     colorCode,
   };
 };
+type DiscountInput = {
+  amount: number;
+  discount?: number;
+  discountPercentage?: number;
+};
+
+export function calculateDiscount({
+  amount,
+  discount,
+  discountPercentage,
+}: DiscountInput): {
+  finalAmount: number;
+  discountPercentage?: number;
+  discountAmount?: number;
+} {
+  if (discount != null && discountPercentage != null) {
+    throw new Error(
+      "Provide either discount amount or discount percentage, not both."
+    );
+  }
+
+  if (discount != null) {
+    // Calculate discount percentage if a discount amount is provided
+    const discountPercent = (discount / amount) * 100;
+    return {
+      finalAmount: amount - discount,
+      discountPercentage: discountPercent,
+      discountAmount: discount,
+    };
+  } else if (discountPercentage != null) {
+    // Calculate discount amount if a discount percentage is provided
+    const discountAmount = (discountPercentage / 100) * amount;
+    return {
+      finalAmount: amount - discountAmount,
+      discountPercentage,
+      discountAmount,
+    };
+  } else {
+    throw new Error(
+      "Please provide either a discount amount or a discount percentage."
+    );
+  }
+}

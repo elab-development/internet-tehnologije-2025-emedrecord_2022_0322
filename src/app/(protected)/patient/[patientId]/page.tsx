@@ -1,4 +1,5 @@
 import { MedicalHistoryContainer } from "@/components/medical-history-container";
+import { PaymentsContainer } from "@/components/appointment/payment-container";
 import { PatientRatingContainer } from "@/components/patient-rating-container";
 import { ProfileImage } from "@/components/profile-image";
 import { Card } from "@/components/ui/card";
@@ -105,7 +106,7 @@ const PatientProfile = async (props: ParamsProps) => {
             <MedicalHistoryContainer patientId={id} />
           )}
 
-          {/* {cat === "payments" && <Payments patientId={id!} />} */}
+          {cat === "payments" && <PaymentsContainer patientId={id!} />}
         </div>
       </div>
       <div className="w-full xl:w-1/3">

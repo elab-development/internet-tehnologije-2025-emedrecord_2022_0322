@@ -41,6 +41,7 @@ const RenderInput = ({ field, props }: { field: any; props: InputProps }) => {
             type={props.inputType}
             placeholder={props.placeholder}
             {...field}
+            value={field?.value ?? ""}
           />
         </FormControl>
       );
@@ -117,6 +118,7 @@ const RenderInput = ({ field, props }: { field: any; props: InputProps }) => {
             type={props.inputType}
             placeholder={props.placeholder}
             {...field}
+            value={field?.value ?? ""}
           ></Textarea>
         </FormControl>
       );

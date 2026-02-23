@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/prisma";
-import { DoctorSchema, StaffSchema, WorkingDaysSchema } from "@/lib/schema";
+import { DoctorSchema, ServicesSchema, StaffSchema, WorkingDaysSchema } from "@/lib/schema";
 import { generateRandomColor } from "@/utils";
 import { checkRole } from "@/utils/roles";
 import { auth, clerkClient } from "@clerk/nextjs/server";
@@ -24,13 +24,24 @@ export async function createNewDoctor(data: any) {
     const validatedValues = values.data;
     const workingDayData = workingDaysValues.data!;
 
+    if (!validatedValues.password) {
+      return {
+        success: false,
+        error: true,
+        message: "Password is required",
+      };
+    }
+
+    const [firstName, ...restNames] = validatedValues.name.trim().split(" ");
+    const lastName = restNames.join(" ") || "Doctor";
+
     const client = await clerkClient();
 
     const user = await client.users.createUser({
       emailAddress: [validatedValues.email],
       password: validatedValues.password,
-      firstName: validatedValues.name.split(" ")[0],
-      lastName: validatedValues.name.split(" ")[1],
+      firstName,
+      lastName,
       publicMetadata: { role: "doctor" },
     });
 
@@ -122,5 +133,25 @@ export async function createNewStaff(data: any) {
   } catch (error) {
     console.log(error);
     return { error: true, success: false, message: "Something went wrong" };
+  }
+}
+export async function addNewService(data: any) {
+  try {
+    const isValidData = ServicesSchema.safeParse(data);
+
+    const validatedData = isValidData.data;
+
+    await db.services.create({
+      data: { ...validatedData!, price: Number(data.price!) },
+    });
+
+    return {
+      success: true,
+      error: false,
+      msg: `Service added successfully`,
+    };
+  } catch (error) {
+    console.log(error);
+    return { success: false, msg: "Internal Server Error" };
   }
 }
