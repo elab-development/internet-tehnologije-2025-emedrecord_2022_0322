@@ -4,10 +4,13 @@ import { StatSummary } from "@/components/charts/stat-summary";
 import { StatCard } from "@/components/stat-card";
 import { RecentAppointments } from "@/components/tables/recent-appointment";
 import { Button } from "@/components/ui/button";
+import { checkRole, getRole } from "@/utils/roles";
 import { getDoctorDashboardStats } from "@/utils/services/doctor";
 import { currentUser } from "@clerk/nextjs/server";
 import { BriefcaseBusiness, BriefcaseMedical, User, Users } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import React from "react";
 
 const DoctorDashboard = async () => {
   const user = await currentUser();
@@ -39,7 +42,7 @@ const DoctorDashboard = async () => {
       className: "bg-rose-600/15",
       iconClassName: "bg-rose-600/25 text-rose-600",
       note: "Total nurses",
-      link: null,
+      link: "",
     },
     {
       title: "Appointments",
@@ -106,6 +109,7 @@ const DoctorDashboard = async () => {
           <StatSummary data={appointmentCounts} total={totalAppointment!} />
         </div>
 
+        <AvailableDoctors data={availableDoctors as any} />
       </div>
     </div>
   );

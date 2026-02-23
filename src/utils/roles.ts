@@ -10,10 +10,6 @@ export const checkRole = async (role: Roles) => {
 export const getRole = async () => {
   const { sessionClaims } = await auth();
 
-  // Add temporary logging to debug
-  console.log("Session Claims:", sessionClaims);
-  console.log("Metadata:", sessionClaims?.metadata);
-
   const role = sessionClaims?.metadata?.role?.toLowerCase() || "patient";
 
   return role;
