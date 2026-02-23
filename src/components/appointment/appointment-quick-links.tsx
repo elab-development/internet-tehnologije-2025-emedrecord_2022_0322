@@ -33,7 +33,7 @@ const AppointmentQuickLinks = async ({ staffId }: { staffId: string }) => {
         </Link>
 
         <Link
-          href="?cat=billing"
+          href="?cat=bills"
           className="px-4 py-2 rounded-lg bg-green-100 text-green-600"
         >
           Bills
