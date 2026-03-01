@@ -1,11 +1,14 @@
 "use server";
 
 import {db} from "@/lib/prisma";
+import { enforceCsrfProtection, sanitizePayload } from "@/lib/security";
 import { PatientFormSchema } from "@/lib/schema";
 import { clerkClient } from "@clerk/nextjs/server";
 
 export async function updatePatient(data: any, pid: string) {
   try {
+    await enforceCsrfProtection();
+
     const validateData = PatientFormSchema.safeParse(data);
 
     if (!validateData.success) {
@@ -16,7 +19,7 @@ export async function updatePatient(data: any, pid: string) {
       };
     }
 
-    const patientData = validateData.data;
+    const patientData = sanitizePayload(validateData.data);
 
     const client = await clerkClient();
     await client.users.updateUser(pid, {
@@ -43,6 +46,8 @@ export async function updatePatient(data: any, pid: string) {
 }
 export async function createNewPatient(data: any, pid: string) {
   try {
+    await enforceCsrfProtection();
+
     const validateData = PatientFormSchema.safeParse(data);
 
     if (!validateData.success) {
@@ -53,7 +58,7 @@ export async function createNewPatient(data: any, pid: string) {
       };
     }
 
-    const patientData = validateData.data;
+    const patientData = sanitizePayload(validateData.data);
     let patient_id = pid;
 
     const client = await clerkClient();

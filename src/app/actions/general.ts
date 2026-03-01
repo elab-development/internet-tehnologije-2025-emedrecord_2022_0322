@@ -2,6 +2,7 @@
 
 import { ReviewFormValues, reviewSchema } from "@/components/dialogs/review-form";
 import { db } from "@/lib/prisma";
+import { enforceCsrfProtection, sanitizePayload } from "@/lib/security";
 import { clerkClient } from "@clerk/nextjs/server";
 
 
@@ -11,6 +12,8 @@ export async function deleteDataById(
   deleteType: "doctor" | "staff" | "patient" | "payment" | "bill"
 ) {
   try {
+    await enforceCsrfProtection();
+
     switch (deleteType) {
       case "doctor":
         await db.doctor.delete({ where: { id: id } });
@@ -64,7 +67,9 @@ export async function deleteDataById(
 }
 export async function createReview(values: ReviewFormValues) {
   try {
-    const validatedFields = reviewSchema.parse(values);
+    await enforceCsrfProtection();
+
+    const validatedFields = sanitizePayload(reviewSchema.parse(values));
 
     await db.rating.create({
       data: {

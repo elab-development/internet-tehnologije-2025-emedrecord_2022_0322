@@ -3,6 +3,7 @@
 import { VitalSignsFormData } from "@/components/dialogs/add-vital-signs";
 import { nurseCanAccessAppointment } from "@/lib/permissions";
 import {db} from "@/lib/prisma";
+import { enforceCsrfProtection, sanitizePayload } from "@/lib/security";
 import { AppointmentSchema, VitalSignsSchema } from "@/lib/schema";
 import { getAppointmentWeatherSummary } from "@/utils/services/weather";
 import { checkRole, getNurseDoctorId } from "@/utils/roles";
@@ -11,6 +12,8 @@ import { AppointmentStatus } from "@prisma/client";
 
 export async function createNewAppointment(data: any) {
   try {
+    await enforceCsrfProtection();
+
     const { userId } = await auth();
 
     if (!userId) {
@@ -31,7 +34,7 @@ export async function createNewAppointment(data: any) {
     if (!validatedData.success) {
       return { success: false, msg: "Invalid data" };
     }
-    const validated = validatedData.data;
+    const validated = sanitizePayload(validatedData.data);
 
     if (isDoctor && validated.doctor_id !== userId) {
       return { success: false, msg: "Unauthorized" };
@@ -87,6 +90,8 @@ export async function appointmentAction(
   reason: string
 ) {
   try {
+    await enforceCsrfProtection();
+
     const { userId } = await auth();
 
     if (!userId) {
@@ -123,7 +128,7 @@ export async function appointmentAction(
       where: { id: Number(id) },
       data: {
         status,
-        reason,
+        reason: sanitizePayload(reason),
       },
     });
 
@@ -144,6 +149,8 @@ export async function addVitalSigns(
   doctorId: string
 ) {
   try {
+    await enforceCsrfProtection();
+
     const { userId } = await auth();
 
     if (!userId) {
@@ -173,7 +180,7 @@ export async function addVitalSigns(
       }
     }
 
-    const validatedData = VitalSignsSchema.parse(data);
+    const validatedData = sanitizePayload(VitalSignsSchema.parse(data));
 
     let medicalRecord = null;
 

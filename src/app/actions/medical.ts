@@ -3,6 +3,7 @@
 import { DiagnosisFormData } from "@/components/dialogs/add-diagnosis";
 import { nurseCanAccessAppointment, nurseCanAccessPayment } from "@/lib/permissions";
 import { db } from "@/lib/prisma";
+import { enforceCsrfProtection, sanitizePayload } from "@/lib/security";
 
 import {
   DiagnosisSchema,
@@ -17,6 +18,8 @@ export const addDiagnosis = async (
   appointmentId: string
 ) => {
   try {
+    await enforceCsrfProtection();
+
     const { userId } = await auth();
 
     if (!userId) {
@@ -34,7 +37,7 @@ export const addDiagnosis = async (
       };
     }
 
-    const validatedData = DiagnosisSchema.parse(data);
+    const validatedData = sanitizePayload(DiagnosisSchema.parse(data));
 
     if (isDoctor && validatedData.doctor_id !== userId) {
       return {
@@ -77,6 +80,8 @@ export const addDiagnosis = async (
 
 export async function addNewBill(data: any) {
   try {
+    await enforceCsrfProtection();
+
     const isAdmin = await checkRole("ADMIN");
     const isDoctor = await checkRole("DOCTOR");
     const isNurse = await checkRole("NURSE");
@@ -119,7 +124,7 @@ export async function addNewBill(data: any) {
       };
     }
 
-    const validatedData = isValidData.data;
+    const validatedData = sanitizePayload(isValidData.data);
     let bill_info = null;
 
     if (!data?.bill_id || data?.bill_id === "undefined") {
@@ -181,6 +186,8 @@ export async function addNewBill(data: any) {
 
 export async function generateBill(data: any) {
   try {
+    await enforceCsrfProtection();
+
     const isAdmin = await checkRole("ADMIN");
     const isDoctor = await checkRole("DOCTOR");
     const isNurse = await checkRole("NURSE");
@@ -212,7 +219,7 @@ export async function generateBill(data: any) {
       };
     }
 
-    const validatedData = isValidData.data;
+    const validatedData = sanitizePayload(isValidData.data);
 
     if (!validatedData.id) {
       return {
@@ -305,6 +312,8 @@ export async function makePayment(data: {
   paymentMethod?: "CASH" | "CARD";
 }) {
   try {
+    await enforceCsrfProtection();
+
     const { userId } = await auth();
 
     if (!userId) {
