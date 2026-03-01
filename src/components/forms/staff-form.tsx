@@ -17,7 +17,6 @@ import { useRouter } from "next/navigation";
 
 const TYPES = [
     { label: "Nurse", value: "NURSE" },
-    { label: "Laboratory", value: "LAB_TECHNICIAN" },
 ];
 
 export const StaffForm = () => {

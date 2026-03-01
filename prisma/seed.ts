@@ -28,7 +28,7 @@ async function seed() {
   console.log("🌱 Seeding data...");
 
   // Create 3 staff
-  const staffRoles = ["NURSE", "CASHIER", "LAB_TECHNICIAN"] as const;
+  const staffRoles = ["NURSE"] as const;
   for (const role of staffRoles) {
     await prisma.staff.create({
       data: {

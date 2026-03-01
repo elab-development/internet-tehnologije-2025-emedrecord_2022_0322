@@ -23,7 +23,6 @@ const ACCESS_LEVELS_ALL = [
   "admin",
   "doctor",
   "nurse",
-  "lab technician",
   "patient",
 ];
 
