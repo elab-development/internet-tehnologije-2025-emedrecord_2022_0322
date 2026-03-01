@@ -4,6 +4,7 @@ import { VitalSignsFormData } from "@/components/dialogs/add-vital-signs";
 import { nurseCanAccessAppointment } from "@/lib/permissions";
 import {db} from "@/lib/prisma";
 import { AppointmentSchema, VitalSignsSchema } from "@/lib/schema";
+import { getAppointmentWeatherSummary } from "@/utils/services/weather";
 import { checkRole, getNurseDoctorId } from "@/utils/roles";
 import { auth } from "@clerk/nextjs/server";
 import { AppointmentStatus } from "@prisma/client";
@@ -51,20 +52,28 @@ export async function createNewAppointment(data: any) {
       return { success: false, msg: "Unauthorized" };
     }
 
+    const appointmentDate = new Date(validated.appointment_date);
+
     await db.appointment.create({
       data: {
         patient_id: data.patient_id,
         doctor_id: validated.doctor_id,
         time: validated.time,
         type: validated.type,
-        appointment_date: new Date(validated.appointment_date),
+        appointment_date: appointmentDate,
         note: validated.note,
       },
     });
 
+    const weatherSummary = await getAppointmentWeatherSummary(
+      appointmentDate,
+      validated.time
+    );
+
     return {
       success: true,
       message: "Appointment booked successfully",
+      weatherSummary,
     };
   } catch (error) {
     console.log(error);
