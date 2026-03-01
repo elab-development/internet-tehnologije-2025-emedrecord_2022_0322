@@ -105,12 +105,12 @@ export async function createNewStaff(data: any) {
       password: validatedValues.password,
       firstName: validatedValues.name.split(" ")[0],
       lastName: validatedValues.name.split(" ")[1],
-      publicMetadata: { role: "doctor" },
+      publicMetadata: { role: validatedValues.role.toLowerCase() },
     });
 
     delete validatedValues["password"];
 
-    const doctor = await db.staff.create({
+    await db.staff.create({
       data: {
         name: validatedValues.name,
         phone: validatedValues.phone,
@@ -127,7 +127,7 @@ export async function createNewStaff(data: any) {
 
     return {
       success: true,
-      message: "Doctor added successfully",
+      message: "Staff added successfully",
       error: false,
     };
   } catch (error) {

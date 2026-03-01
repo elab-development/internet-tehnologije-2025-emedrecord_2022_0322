@@ -254,10 +254,12 @@ export async function getAllPatients({
   page,
   limit,
   search,
+  doctorId,
 }: {
   page: number | string;
   limit?: number | string;
   search?: string;
+  doctorId?: string;
 }) {
   try {
     const PAGE_NUMBER = Number(page) <= 0 ? 1 : Number(page);
@@ -268,11 +270,26 @@ export async function getAllPatients({
     const [patients, totalRecords] = await Promise.all([
       db.patient.findMany({
         where: {
-          OR: [
-            { first_name: { contains: search, mode: "insensitive" } },
-            { last_name: { contains: search, mode: "insensitive" } },
-            { phone: { contains: search, mode: "insensitive" } },
-            { email: { contains: search, mode: "insensitive" } },
+          AND: [
+            {
+              OR: [
+                { first_name: { contains: search, mode: "insensitive" } },
+                { last_name: { contains: search, mode: "insensitive" } },
+                { phone: { contains: search, mode: "insensitive" } },
+                { email: { contains: search, mode: "insensitive" } },
+              ],
+            },
+            ...(doctorId
+              ? [
+                  {
+                    appointments: {
+                      some: {
+                        doctor_id: doctorId,
+                      },
+                    },
+                  },
+                ]
+              : []),
           ],
         },
         include: {
@@ -292,7 +309,19 @@ export async function getAllPatients({
         take: LIMIT,
         orderBy: { first_name: "asc" },
       }),
-      db.patient.count(),
+      db.patient.count({
+        where: {
+          ...(doctorId
+            ? {
+                appointments: {
+                  some: {
+                    doctor_id: doctorId,
+                  },
+                },
+              }
+            : {}),
+        },
+      }),
     ]);
 
     const totalPages = Math.ceil(totalRecords / LIMIT);

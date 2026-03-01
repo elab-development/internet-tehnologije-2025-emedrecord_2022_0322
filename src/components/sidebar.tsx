@@ -93,18 +93,18 @@ export const Sidebar = async () => {
         {
           name: "Billing Overview",
           href: "/record/billing",
-          access: ["admin", "doctor"],
+          access: ["admin", "doctor", "nurse"],
           icon: Receipt,
         },
         {
           name: "Patient Management",
-          href: "/nurse/patient-management",
+          href: "/record/patients",
           access: ["nurse"],
           icon: Users,
         },
         {
           name: "Administer Medications",
-          href: "/nurse/administer-medications",
+          href: "/record/appointments",
           access: ["admin", "doctor", "nurse"],
           icon: Pill,
         },

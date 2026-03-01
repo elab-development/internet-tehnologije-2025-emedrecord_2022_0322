@@ -7,12 +7,13 @@ import { Table } from "@/components/tables/table";
 import { Button } from "@/components/ui/button";
 import { SearchParamsProps } from "@/types";
 import { calculateAge } from "@/utils";
-import { checkRole } from "@/utils/roles";
+import { checkRole, getNurseDoctorId } from "@/utils/roles";
 import { DATA_LIMIT } from "@/utils/seetings";
 import { getAllPatients } from "@/utils/services/patient";
 import { Patient } from "@prisma/client";
 import { format } from "date-fns";
 import { UserPen, Users } from "lucide-react";
+import { auth } from "@clerk/nextjs/server";
 
 const columns = [
   {
@@ -67,10 +68,16 @@ const PatientList = async (props: SearchParamsProps) => {
   const searchParams = await props.searchParams;
   const page = (searchParams?.p || "1") as string;
   const searchQuery = (searchParams?.q || "") as string;
+  const { userId } = await auth();
+  const isNurse = await checkRole("NURSE");
+  const nurseDoctorId = isNurse
+    ? await getNurseDoctorId(userId || undefined)
+    : undefined;
 
   const { data, totalPages, totalRecords, currentPage } = await getAllPatients({
     page,
     search: searchQuery,
+    doctorId: nurseDoctorId || undefined,
   });
   const isAdmin = await checkRole("ADMIN");
 

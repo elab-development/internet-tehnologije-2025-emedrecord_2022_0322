@@ -4,7 +4,7 @@ import { ProfileImage } from "@/components/profile-image";
 import SearchInput from "@/components/search-input";
 import { Table } from "@/components/tables/table";
 import { ViewAppointment } from "@/components/view-appointment";
-import { checkRole, getRole } from "@/utils/roles";
+import { checkRole, getNurseDoctorId, getRole } from "@/utils/roles";
 import { DATA_LIMIT } from "@/utils/seetings";
 import { getPatientAppointments } from "@/utils/services/appointment";
 import { auth } from "@clerk/nextjs/server";
@@ -56,6 +56,8 @@ const Appointments = async (props: {
   const userRole = await getRole();
   const { userId } = await auth();
   const isPatient = await checkRole("PATIENT");
+  const nurseDoctorId =
+    userRole === "nurse" ? await getNurseDoctorId(userId || undefined) : null;
 
   const page = (searchParams?.p || "1") as string;
   const searchQuery = searchParams?.q || "";
@@ -63,16 +65,12 @@ const Appointments = async (props: {
 
   let queryId = undefined;
 
-  if (
-    userRole == "admin" ||
-    (userRole == "doctor" && id) ||
-    (userRole === "nurse" && id)
-  ) {
+  if (userRole == "admin" || (userRole == "doctor" && id)) {
     queryId = id;
   } else if (userRole === "doctor" || userRole === "patient") {
     queryId = userId;
   } else if (userRole === "nurse") {
-    queryId = undefined;
+    queryId = nurseDoctorId || "__NO_ACCESS__";
   }
 
   const { data, totalPages, totalRecord, currentPage } =
