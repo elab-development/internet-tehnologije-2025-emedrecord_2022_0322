@@ -81,8 +81,9 @@ export async function createNewStaff(data: any) {
     }
 
     const isAdmin = await checkRole("ADMIN");
+    const isDoctor = await checkRole("DOCTOR");
 
-    if (!isAdmin) {
+    if (!isAdmin && !isDoctor) {
       return { success: false, msg: "Unauthorized" };
     }
 
@@ -122,6 +123,7 @@ export async function createNewStaff(data: any) {
         colorCode: generateRandomColor(),
         id: user.id,
         status: "ACTIVE",
+        doctor_id: isDoctor ? userId : undefined,
       },
     });
 
@@ -133,6 +135,66 @@ export async function createNewStaff(data: any) {
   } catch (error) {
     console.log(error);
     return { error: true, success: false, message: "Something went wrong" };
+  }
+}
+
+export async function assignExistingNurseToDoctor(nurseId: string) {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return { success: false, msg: "Unauthorized" };
+    }
+
+    const isDoctor = await checkRole("DOCTOR");
+
+    if (!isDoctor) {
+      return { success: false, msg: "Unauthorized" };
+    }
+
+    const nurse = await db.staff.findUnique({
+      where: { id: nurseId },
+      select: {
+        id: true,
+        role: true,
+        status: true,
+        doctor_id: true,
+      },
+    });
+
+    if (!nurse || nurse.role !== "NURSE") {
+      return {
+        success: false,
+        msg: "Selected staff is not a nurse",
+      };
+    }
+
+    if (nurse.status !== "ACTIVE") {
+      return {
+        success: false,
+        msg: "Selected nurse is not active",
+      };
+    }
+
+    if (nurse.doctor_id && nurse.doctor_id !== userId) {
+      return {
+        success: false,
+        msg: "Nurse is already assigned to another doctor",
+      };
+    }
+
+    await db.staff.update({
+      where: { id: nurseId },
+      data: { doctor_id: userId },
+    });
+
+    return {
+      success: true,
+      msg: "Nurse assigned successfully",
+    };
+  } catch (error) {
+    console.log(error);
+    return { success: false, msg: "Internal Server Error" };
   }
 }
 export async function addNewService(data: any) {
