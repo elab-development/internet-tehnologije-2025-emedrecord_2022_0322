@@ -1,5 +1,6 @@
 import { ActionDialog } from '@/components/action-dialog';
 import { AssignExistingNurseDialog } from '@/components/dialogs/assign-existing-nurse';
+import { UnassignNurseDialog } from '@/components/dialogs/unassign-nurse';
 import { StaffForm } from '@/components/forms/staff-form';
 import { Pagination } from '@/components/pagination';
 import { ProfileImage } from '@/components/profile-image';
@@ -92,6 +93,10 @@ const StaffList = async (props: SearchParamsProps) => {
       <td>
         <div className="flex items-center gap-2">
           <ActionDialog type="staff" id={item?.id} data={item} />
+
+            {isDoctor && (
+              <UnassignNurseDialog nurseId={item.id} nurseName={item.name} />
+            )}
 
           {isAdmin && (
             <ActionDialog type="delete" id={item?.id} deleteType="staff" />
