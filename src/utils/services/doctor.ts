@@ -23,7 +23,7 @@ export async function getDoctorDashboardStats() {
     const [totalPatient, totalNurses, appointments, doctors] =
       await Promise.all([
         db.patient.count(),
-        db.staff.count({ where: { role: "NURSE" } }),
+        db.staff.count({ where: { role: "NURSE", doctor_id: userId! } }),
         db.appointment.findMany({
           where: { doctor_id: userId!, appointment_date: { lte: new Date() } },
           include: {

@@ -14,9 +14,7 @@ enum Role {
   ADMIN
   NURSE
   DOCTOR
-  LAB_TECHNICIAN
   PATIENT
-  CASHIER
 }
 
 enum Status {

@@ -23,7 +23,5 @@ export const USER_ROLES = {
   ADMIN: "ADMIN" as string,
   DOCTOR: "DOCTOR",
   NURSE: "NURSE",
-  LAB_TECHNICIAN: "LAB_TECHNICIAN",
   PATIENT: "PATIENT",
-  CASHIER: "CASHIER",
 };

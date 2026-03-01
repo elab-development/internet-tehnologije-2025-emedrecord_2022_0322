@@ -5,10 +5,12 @@ export async function getMedicalRecords({
   page,
   limit,
   search,
+  doctorId,
 }: {
   page: number | string;
   limit?: number | string;
   search?: string;
+  doctorId?: string;
 }) {
   try {
     const PAGE_NUMBER = Number(page) <= 0 ? 1 : Number(page);
@@ -17,18 +19,29 @@ export async function getMedicalRecords({
     const SKIP = (PAGE_NUMBER - 1) * LIMIT;
 
     const where: Prisma.MedicalRecordsWhereInput = {
-      OR: [
+      AND: [
         {
-          patient: {
-            first_name: { contains: search, mode: "insensitive" },
-          },
+          OR: [
+            {
+              patient: {
+                first_name: { contains: search, mode: "insensitive" },
+              },
+            },
+            {
+              patient: {
+                last_name: { contains: search, mode: "insensitive" },
+              },
+            },
+            { patient_id: { contains: search, mode: "insensitive" } },
+          ],
         },
-        {
-          patient: {
-            last_name: { contains: search, mode: "insensitive" },
-          },
-        },
-        { patient_id: { contains: search, mode: "insensitive" } },
+        ...(doctorId
+          ? [
+              {
+                doctor_id: doctorId,
+              },
+            ]
+          : []),
       ],
     };
 

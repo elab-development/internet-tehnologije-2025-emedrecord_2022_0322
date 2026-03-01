@@ -81,8 +81,9 @@ export async function createNewStaff(data: any) {
     }
 
     const isAdmin = await checkRole("ADMIN");
+    const isDoctor = await checkRole("DOCTOR");
 
-    if (!isAdmin) {
+    if (!isAdmin && !isDoctor) {
       return { success: false, msg: "Unauthorized" };
     }
 
@@ -105,12 +106,12 @@ export async function createNewStaff(data: any) {
       password: validatedValues.password,
       firstName: validatedValues.name.split(" ")[0],
       lastName: validatedValues.name.split(" ")[1],
-      publicMetadata: { role: "doctor" },
+      publicMetadata: { role: validatedValues.role.toLowerCase() },
     });
 
     delete validatedValues["password"];
 
-    const doctor = await db.staff.create({
+    await db.staff.create({
       data: {
         name: validatedValues.name,
         phone: validatedValues.phone,
@@ -122,17 +123,78 @@ export async function createNewStaff(data: any) {
         colorCode: generateRandomColor(),
         id: user.id,
         status: "ACTIVE",
+        doctor_id: isDoctor ? userId : undefined,
       },
     });
 
     return {
       success: true,
-      message: "Doctor added successfully",
+      message: "Staff added successfully",
       error: false,
     };
   } catch (error) {
     console.log(error);
     return { error: true, success: false, message: "Something went wrong" };
+  }
+}
+
+export async function assignExistingNurseToDoctor(nurseId: string) {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return { success: false, msg: "Unauthorized" };
+    }
+
+    const isDoctor = await checkRole("DOCTOR");
+
+    if (!isDoctor) {
+      return { success: false, msg: "Unauthorized" };
+    }
+
+    const nurse = await db.staff.findUnique({
+      where: { id: nurseId },
+      select: {
+        id: true,
+        role: true,
+        status: true,
+        doctor_id: true,
+      },
+    });
+
+    if (!nurse || nurse.role !== "NURSE") {
+      return {
+        success: false,
+        msg: "Selected staff is not a nurse",
+      };
+    }
+
+    if (nurse.status !== "ACTIVE") {
+      return {
+        success: false,
+        msg: "Selected nurse is not active",
+      };
+    }
+
+    if (nurse.doctor_id && nurse.doctor_id !== userId) {
+      return {
+        success: false,
+        msg: "Nurse is already assigned to another doctor",
+      };
+    }
+
+    await db.staff.update({
+      where: { id: nurseId },
+      data: { doctor_id: userId },
+    });
+
+    return {
+      success: true,
+      msg: "Nurse assigned successfully",
+    };
+  } catch (error) {
+    console.log(error);
+    return { success: false, msg: "Internal Server Error" };
   }
 }
 export async function addNewService(data: any) {
@@ -149,6 +211,58 @@ export async function addNewService(data: any) {
       success: true,
       error: false,
       msg: `Service added successfully`,
+    };
+  } catch (error) {
+    console.log(error);
+    return { success: false, msg: "Internal Server Error" };
+  }
+}
+
+export async function unassignNurseFromDoctor(nurseId: string) {
+  try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return { success: false, msg: "Unauthorized" };
+    }
+
+    const isDoctor = await checkRole("DOCTOR");
+
+    if (!isDoctor) {
+      return { success: false, msg: "Unauthorized" };
+    }
+
+    const nurse = await db.staff.findUnique({
+      where: { id: nurseId },
+      select: {
+        id: true,
+        role: true,
+        doctor_id: true,
+      },
+    });
+
+    if (!nurse || nurse.role !== "NURSE") {
+      return {
+        success: false,
+        msg: "Selected staff is not a nurse",
+      };
+    }
+
+    if (nurse.doctor_id !== userId) {
+      return {
+        success: false,
+        msg: "You can only unassign your own nurse",
+      };
+    }
+
+    await db.staff.update({
+      where: { id: nurseId },
+      data: { doctor_id: null },
+    });
+
+    return {
+      success: true,
+      msg: "Nurse unassigned successfully",
     };
   } catch (error) {
     console.log(error);

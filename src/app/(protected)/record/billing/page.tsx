@@ -6,9 +6,10 @@ import SearchInput from "@/components/search-input";
 import { Table } from "@/components/tables/table";
 import { cn } from "@/lib/utils";
 import { SearchParamsProps } from "@/types";
-import { checkRole } from "@/utils/roles";
+import { checkRole, getNurseDoctorId } from "@/utils/roles";
 import { DATA_LIMIT } from "@/utils/seetings";
 import { getPaymentRecords } from "@/utils/services/payments";
+import { auth } from "@clerk/nextjs/server";
 import { Patient, Payment } from "@prisma/client";
 import { format } from "date-fns";
 import { ReceiptText } from "lucide-react";
@@ -72,11 +73,17 @@ const BillingPage = async (props: SearchParamsProps) => {
   const searchParams = await props.searchParams;
   const page = (searchParams?.p || "1") as string;
   const searchQuery = (searchParams?.q || "") as string;
+  const { userId } = await auth();
+  const isNurse = await checkRole("NURSE");
+  const nurseDoctorId = isNurse
+    ? await getNurseDoctorId(userId || undefined)
+    : undefined;
 
   const { data, totalPages, totalRecords, currentPage } =
     await getPaymentRecords({
       page,
       search: searchQuery,
+      doctorId: nurseDoctorId || undefined,
     });
   const isAdmin = await checkRole("ADMIN");
 

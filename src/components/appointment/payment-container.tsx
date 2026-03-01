@@ -62,6 +62,7 @@ export const PaymentsContainer = async ({
   const isAdmin = await checkRole("ADMIN");
   const isDoctor = await checkRole("DOCTOR");
   const isPatient = await checkRole("PATIENT");
+  const isNurse = await checkRole("NURSE");
 
   const renderRow = (item: Payment) => {
     return (
@@ -86,12 +87,12 @@ export const PaymentsContainer = async ({
 
         <td className="">
           <div className="flex items-center gap-2">
-            {(isAdmin || isDoctor) && (
+            {(isAdmin || isDoctor || isNurse) && (
               <ViewAction
                 href={`/record/appointments/${item?.appointment_id}?cat=bills`}
               />
             )}
-            {(isAdmin || isDoctor || isPatient) && (
+            {(isAdmin || isDoctor || isNurse || isPatient) && (
               <MakePaymentDialog
                 paymentId={item.id}
                 totalPayable={item.total_amount - item.discount}

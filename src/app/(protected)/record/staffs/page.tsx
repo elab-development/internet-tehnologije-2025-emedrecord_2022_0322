@@ -1,4 +1,6 @@
 import { ActionDialog } from '@/components/action-dialog';
+import { AssignExistingNurseDialog } from '@/components/dialogs/assign-existing-nurse';
+import { UnassignNurseDialog } from '@/components/dialogs/unassign-nurse';
 import { StaffForm } from '@/components/forms/staff-form';
 import { Pagination } from '@/components/pagination';
 import { ProfileImage } from '@/components/profile-image';
@@ -7,7 +9,8 @@ import { Table } from '@/components/tables/table';
 import { SearchParamsProps } from '@/types';
 import { checkRole } from '@/utils/roles';
 import { DATA_LIMIT } from '@/utils/seetings';
-import { getAllStaff } from '@/utils/services/staff';
+import { getAllStaff, getUnassignedNurses } from '@/utils/services/staff';
+import { auth } from '@clerk/nextjs/server';
 import { Staff } from '@prisma/client';
 import { format } from 'date-fns';
 import { Users } from 'lucide-react';
@@ -49,14 +52,20 @@ const StaffList = async (props: SearchParamsProps) => {
   const searchParams = await props.searchParams;
   const page = (searchParams?.p || "1") as string;
   const searchQuery = (searchParams?.q || "") as string;
+  const { userId } = await auth();
+  const isDoctor = await checkRole("DOCTOR");
+  const isAdmin = await checkRole("ADMIN");
 
   const { data, totalPages, totalRecords, currentPage } = await getAllStaff({
     page,
     search: searchQuery,
+    doctorId: isDoctor ? userId || undefined : undefined,
   });
 
+  const { data: unassignedNurses } =
+    isDoctor ? await getUnassignedNurses() : { data: [] };
+
   if (!data) return null;
-  const isAdmin = await checkRole("ADMIN");
 
   const renderRow = (item: Staff) => (
     <tr
@@ -85,6 +94,10 @@ const StaffList = async (props: SearchParamsProps) => {
         <div className="flex items-center gap-2">
           <ActionDialog type="staff" id={item?.id} data={item} />
 
+            {isDoctor && (
+              <UnassignNurseDialog nurseId={item.id} nurseName={item.name} />
+            )}
+
           {isAdmin && (
             <ActionDialog type="delete" id={item?.id} deleteType="staff" />
           )}
@@ -106,7 +119,10 @@ const StaffList = async (props: SearchParamsProps) => {
         </div>
         <div className="w-full lg:w-fit flex items-center justify-between lg:justify-start gap-2">
           <SearchInput />
-          {isAdmin && <StaffForm />}
+          {(isAdmin || isDoctor) && <StaffForm />}
+          {isDoctor && (
+            <AssignExistingNurseDialog nurses={unassignedNurses || []} />
+          )}
         </div>
       </div>
 

@@ -7,7 +7,11 @@ import { PatientDetailsCard } from "@/components/appointment/patient-details-car
 import { PaymentsContainer } from "@/components/appointment/payment-container";
 import { VitalSigns } from "@/components/appointment/vital-signs";
 import { MedicalHistoryContainer } from "@/components/medical-history-container";
+import { nurseCanAccessAppointment } from "@/lib/permissions";
 import { getAppointmentWithMedicalRecordsById } from "@/utils/services/appointment";
+import { checkRole } from "@/utils/roles";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const AppointmentDetailsPage = async ({
   params,
@@ -19,8 +23,31 @@ const AppointmentDetailsPage = async ({
   const { id } = await params;
   const search = await searchParams;
   const cat = (search?.cat as string) || "charts";
+  const { userId } = await auth();
+
+  if (!userId) {
+    redirect("/sign-in");
+  }
 
   const { data } = await getAppointmentWithMedicalRecordsById(Number(id));
+
+  if (!data) {
+    redirect("/record/appointments");
+  }
+
+  const isAdmin = await checkRole("ADMIN");
+  const isDoctor = await checkRole("DOCTOR");
+  const isNurse = await checkRole("NURSE");
+  const isPatient = await checkRole("PATIENT");
+
+  if (
+    !isAdmin &&
+    !(isDoctor && data?.doctor_id === userId) &&
+    !(isPatient && data?.patient_id === userId) &&
+    !(isNurse && (await nurseCanAccessAppointment(userId, Number(id))))
+  ) {
+    redirect("/record/appointments");
+  }
 
   return (
     <div className="flex p-6 flex-col-reverse lg:flex-row w-full min-h-screen gap-10">

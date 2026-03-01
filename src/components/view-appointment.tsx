@@ -15,6 +15,8 @@ import { AppointmentAction } from './appointment-action';
 export const ViewAppointment = async ({ id }: { id: string | undefined }) => {
   const { data } = await getAppointmentById(Number(id!));
   const { userId } = await auth();
+  const isAdmin = await checkRole("ADMIN");
+  const isNurse = await checkRole("NURSE");
 
   if (!data) return null;
 
@@ -142,7 +144,7 @@ export const ViewAppointment = async ({ id }: { id: string | undefined }) => {
               </div>
             </div>
 
-            {((await checkRole("ADMIN")) || data?.doctor_id === userId) && (
+            {(isAdmin || isNurse || data?.doctor_id === userId) && (
               <>
                 <p className="w-fit bg-blue-100 text-blue-600 py-1 px-2 rounded text-xs md:text-sm mt-4">
                   Perform Action

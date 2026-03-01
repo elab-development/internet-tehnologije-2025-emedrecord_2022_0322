@@ -115,7 +115,7 @@ export const StaffSchema = z.object({
     .trim()
     .min(2, "Name must be at least 2 characters")
     .max(50, "Name must be at most 50 characters"),
-  role: z.enum(["NURSE", "LAB_TECHNICIAN"], { message: "Role is required." }),
+  role: z.enum(["NURSE"], { message: "Role is required." }),
   phone: z
     .string()
     .min(10, "Contact must be 10-digits")

@@ -19,7 +19,7 @@ export default clerkMiddleware(async (auth, req) => {
 
   const role =
     userId && sessionClaims?.metadata?.role
-      ? sessionClaims.metadata.role
+      ? String(sessionClaims.metadata.role).toLowerCase()
       : userId
       ? "patient"
       : null;

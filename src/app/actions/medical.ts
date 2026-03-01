@@ -1,6 +1,7 @@
 "use server";
 
 import { DiagnosisFormData } from "@/components/dialogs/add-diagnosis";
+import { nurseCanAccessAppointment, nurseCanAccessPayment } from "@/lib/permissions";
 import { db } from "@/lib/prisma";
 
 import {
@@ -16,7 +17,30 @@ export const addDiagnosis = async (
   appointmentId: string
 ) => {
   try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      return {
+        error: "Unauthorized",
+      };
+    }
+
+    const isAdmin = await checkRole("ADMIN");
+    const isDoctor = await checkRole("DOCTOR");
+
+    if (!isAdmin && !isDoctor) {
+      return {
+        error: "You are not authorized to add diagnosis",
+      };
+    }
+
     const validatedData = DiagnosisSchema.parse(data);
+
+    if (isDoctor && validatedData.doctor_id !== userId) {
+      return {
+        error: "Unauthorized",
+      };
+    }
 
     let medicalRecord = null;
 
@@ -55,12 +79,35 @@ export async function addNewBill(data: any) {
   try {
     const isAdmin = await checkRole("ADMIN");
     const isDoctor = await checkRole("DOCTOR");
+    const isNurse = await checkRole("NURSE");
+    const { userId } = await auth();
 
-    if (!isAdmin && !isDoctor) {
+    if (!userId) {
+      return {
+        success: false,
+        msg: "Unauthorized",
+      };
+    }
+
+    if (!isAdmin && !isDoctor && !isNurse) {
       return {
         success: false,
         msg: "You are not authorized to add a bill",
       };
+    }
+
+    if (isNurse) {
+      const hasAccess = await nurseCanAccessAppointment(
+        userId,
+        Number(data?.appointment_id)
+      );
+
+      if (!hasAccess) {
+        return {
+          success: false,
+          msg: "You are not authorized to add a bill for this appointment",
+        };
+      }
     }
 
     const isValidData = PatientBillSchema.safeParse(data);
@@ -134,6 +181,27 @@ export async function addNewBill(data: any) {
 
 export async function generateBill(data: any) {
   try {
+    const isAdmin = await checkRole("ADMIN");
+    const isDoctor = await checkRole("DOCTOR");
+    const isNurse = await checkRole("NURSE");
+    const { userId } = await auth();
+
+    if (!userId) {
+      return {
+        success: false,
+        error: true,
+        msg: "Unauthorized",
+      };
+    }
+
+    if (!isAdmin && !isDoctor && !isNurse) {
+      return {
+        success: false,
+        error: true,
+        msg: "You are not authorized to generate bills",
+      };
+    }
+
     const isValidData = PaymentSchema.safeParse(data);
 
     if (!isValidData.success) {
@@ -165,6 +233,18 @@ export async function generateBill(data: any) {
         error: true,
         msg: "Payment record not found",
       };
+    }
+
+    if (isNurse) {
+      const hasAccess = await nurseCanAccessPayment(userId, payment.id);
+
+      if (!hasAccess) {
+        return {
+          success: false,
+          error: true,
+          msg: "You are not authorized to generate this bill",
+        };
+      }
     }
 
     if (!payment.bills.length) {
@@ -234,8 +314,9 @@ export async function makePayment(data: {
     const isAdmin = await checkRole("ADMIN");
     const isDoctor = await checkRole("DOCTOR");
     const isPatient = await checkRole("PATIENT");
+    const isNurse = await checkRole("NURSE");
 
-    if (!isAdmin && !isDoctor && !isPatient) {
+    if (!isAdmin && !isDoctor && !isPatient && !isNurse) {
       return {
         success: false,
         msg: "You are not authorized to record payments",
@@ -258,6 +339,17 @@ export async function makePayment(data: {
         success: false,
         msg: "Unauthorized",
       };
+    }
+
+    if (isNurse) {
+      const hasAccess = await nurseCanAccessPayment(userId, payment.id);
+
+      if (!hasAccess) {
+        return {
+          success: false,
+          msg: "Unauthorized",
+        };
+      }
     }
 
     if (data.amount <= 0) {
