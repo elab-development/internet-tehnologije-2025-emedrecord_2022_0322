@@ -5,7 +5,7 @@ const status_color = {
   PENDING: "bg-yellow-600/15 text-yellow-600",
   SCHEDULED: "bg-emerald-600/15 text-emerald-600",
   CANCELLED: "bg-red-600/15 text-red-600",
-  COMPLETED: "bg-blue-600/15 text-blue-600",
+  COMPLETED: "bg-primary/15 text-primary",
 };
 
 export const AppointmentStatusIndicator = ({
@@ -24,3 +24,4 @@ export const AppointmentStatusIndicator = ({
     </p>
   );
 };
+

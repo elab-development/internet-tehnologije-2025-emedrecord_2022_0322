@@ -101,14 +101,14 @@ const MedicalRecordsPage = async (props: SearchParamsProps) => {
         <td className="hidden 2xl:table-cell">{item?.doctor_id}</td>
         <td className="hidden lg:table-cell">
           {item?.diagnosis?.length === 0 ? (
-            <span className="text-gray-400 italic">No diagnosis found</span>
+            <span className="text-muted-foreground/80 italic">No diagnosis found</span>
           ) : (
             <span>{item?.diagnosis.length}</span>
           )}
         </td>
         <td className="hidden xl:table-cell">
           {item?.lab_test?.length === 0 ? (
-            <span className="text-gray-400 italic">No lab found</span>
+            <span className="text-muted-foreground/80 italic">No lab found</span>
           ) : (
             <span>{item?.lab_test.length}</span>
           )}
@@ -122,10 +122,10 @@ const MedicalRecordsPage = async (props: SearchParamsProps) => {
   };
 
   return (
-    <div className="bg-white rounded-xl py-6 px-3 2xl:px-6">
+    <div className="bg-card rounded-xl py-6 px-3 2xl:px-6">
       <div className="flex items-center justify-between">
         <div className="hidden lg:flex items-center gap-1">
-          <BriefcaseBusiness size={20} className="text-gray-500" />
+          <BriefcaseBusiness size={20} className="text-muted-foreground" />
 
           <p className="text-2xl font-semibold">{totalRecords}</p>
           <span className="text-gray-600 text-sm xl:text-base">
@@ -152,3 +152,4 @@ const MedicalRecordsPage = async (props: SearchParamsProps) => {
 };
 
 export default MedicalRecordsPage;
+

@@ -33,7 +33,7 @@ const NurseHomePage = async () => {
 
   return (
     <div className="w-full p-3 md:p-6 space-y-6">
-      <Card className="bg-white">
+      <Card className="bg-card">
         <CardHeader>
           <CardTitle>Nurse Dashboard</CardTitle>
           <CardDescription>
@@ -56,7 +56,7 @@ const NurseHomePage = async () => {
                 {nurse?.name || "Nurse profile"}
               </h2>
               <p className="text-sm text-gray-600">{nurse?.email || "No email"}</p>
-              <p className="text-sm text-gray-500">Role: {nurse?.role || "N/A"}</p>
+              <p className="text-sm text-muted-foreground">Role: {nurse?.role || "N/A"}</p>
             </div>
           </div>
 
@@ -67,13 +67,13 @@ const NurseHomePage = async () => {
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
                 <p>
-                  <span className="text-gray-500">Phone:</span> {nurse?.phone || "N/A"}
+                  <span className="text-muted-foreground">Phone:</span> {nurse?.phone || "N/A"}
                 </p>
                 <p>
-                  <span className="text-gray-500">Department:</span> {nurse?.department || "N/A"}
+                  <span className="text-muted-foreground">Department:</span> {nurse?.department || "N/A"}
                 </p>
                 <p>
-                  <span className="text-gray-500">Status:</span> {nurse?.status || "N/A"}
+                  <span className="text-muted-foreground">Status:</span> {nurse?.status || "N/A"}
                 </p>
               </CardContent>
             </Card>
@@ -86,19 +86,19 @@ const NurseHomePage = async () => {
                 {nurse?.doctor ? (
                   <>
                     <p>
-                      <span className="text-gray-500">Name:</span> Dr. {nurse.doctor.name}
+                      <span className="text-muted-foreground">Name:</span> Dr. {nurse.doctor.name}
                     </p>
                     <p>
-                      <span className="text-gray-500">Specialization:</span> {nurse.doctor.specialization}
+                      <span className="text-muted-foreground">Specialization:</span> {nurse.doctor.specialization}
                     </p>
                     <p>
-                      <span className="text-gray-500">Department:</span> {nurse.doctor.department || "N/A"}
+                      <span className="text-muted-foreground">Department:</span> {nurse.doctor.department || "N/A"}
                     </p>
                     <p>
-                      <span className="text-gray-500">Email:</span> {nurse.doctor.email}
+                      <span className="text-muted-foreground">Email:</span> {nurse.doctor.email}
                     </p>
                     <p>
-                      <span className="text-gray-500">Phone:</span> {nurse.doctor.phone}
+                      <span className="text-muted-foreground">Phone:</span> {nurse.doctor.phone}
                     </p>
                   </>
                 ) : (
@@ -128,3 +128,4 @@ const NurseHomePage = async () => {
 };
 
 export default NurseHomePage;
+

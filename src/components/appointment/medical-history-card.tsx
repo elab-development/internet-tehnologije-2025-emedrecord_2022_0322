@@ -17,17 +17,17 @@ export const MedicalHistoryCard = ({
       <div className="space-y-6 pt-4">
         <div className="flex gap-x-6 justify-between">
           <div>
-            <span className="text-sm text-gray-500">Appointment ID</span>
+            <span className="text-sm text-muted-foreground">Appointment ID</span>
             <p className="text-xl font-medium"># {record.id}</p>
           </div>
           {index === 0 && (
-            <div className="px-4 h-8 text-center bg-blue-100 rounded-full font-semibold text-blue-600">
+            <div className="px-4 h-8 text-center bg-blue-100 rounded-full font-semibold text-primary">
               <span>Recent</span>
             </div>
           )}
 
           <div>
-            <span className="text-sm text-gray-500">Date</span>
+            <span className="text-sm text-muted-foreground">Date</span>
             <p className="text-xl font-medium">
               {record.created_at.toLocaleDateString()}
             </p>
@@ -37,27 +37,27 @@ export const MedicalHistoryCard = ({
         <Separator />
 
         <div>
-          <span className="text-sm text-gray-500">Diagnosis</span>
+          <span className="text-sm text-muted-foreground">Diagnosis</span>
           <p className="text-lg text-muted-foreground">{record.diagnosis}</p>
         </div>
         <Separator />
 
         <div>
-          <span className="text-sm text-gray-500">Symptoms</span>
+          <span className="text-sm text-muted-foreground">Symptoms</span>
           <p className="text-lg text-muted-foreground">{record.symptoms}</p>
         </div>
 
         <Separator />
 
         <div>
-          <span className="text-sm text-gray-500">Additional Note</span>
+          <span className="text-sm text-muted-foreground">Additional Note</span>
           <p className="text-lg text-muted-foreground">{record.notes}</p>
         </div>
 
         <Separator />
 
         <div>
-          <span className="text-sm text-gray-500">Doctor</span>
+          <span className="text-sm text-muted-foreground">Doctor</span>
           <div>
             <p className="text-lg text-muted-foreground">
               {record.doctor.name}
@@ -69,3 +69,4 @@ export const MedicalHistoryCard = ({
     </Card>
   );
 };
+

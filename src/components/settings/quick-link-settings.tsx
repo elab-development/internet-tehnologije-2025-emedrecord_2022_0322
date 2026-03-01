@@ -3,9 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 export const SettingsQuickLinks = () => {
   return (
-    <Card className="w-full rounded-xl bg-white shadow-none">
+    <Card className="w-full rounded-xl bg-card shadow-none">
       <CardHeader>
-        <CardTitle className="text-lg text-gray-500">Quick Links</CardTitle>
+        <CardTitle className="text-lg text-muted-foreground">Quick Links</CardTitle>
       </CardHeader>
 
       <CardContent className="text-sm font-normal flex flex-wrap gap-4">
@@ -32,3 +32,4 @@ export const SettingsQuickLinks = () => {
     </Card>
   );
 };
+

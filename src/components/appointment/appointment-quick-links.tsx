@@ -7,7 +7,7 @@ const AppointmentQuickLinks = async ({ staffId }: { staffId: string }) => {
   const isPatient = await checkRole("PATIENT");
 
   return (
-    <Card className="w-full rounded-xl bg-white shadow-none">
+    <Card className="w-full rounded-xl bg-card shadow-none">
       <CardHeader>
         <CardTitle>Quick Links</CardTitle>
       </CardHeader>
@@ -27,7 +27,7 @@ const AppointmentQuickLinks = async ({ staffId }: { staffId: string }) => {
 
         <Link
           href="?cat=diagnosis"
-          className="px-4 py-2 rounded-lg bg-blue-100 text-blue-600"
+          className="px-4 py-2 rounded-lg bg-blue-100 text-primary"
         >
           Diagnosis
         </Link>
@@ -74,3 +74,4 @@ const AppointmentQuickLinks = async ({ staffId }: { staffId: string }) => {
 };
 
 export default AppointmentQuickLinks;
+

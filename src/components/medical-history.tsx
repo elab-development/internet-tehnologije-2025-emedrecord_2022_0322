@@ -83,7 +83,7 @@ export const MedicalHistory = ({ data, isShowProfile }: DataProps) => {
                 </td>
                 <td className="hidden lg:table-cell">
                     {item?.diagnosis?.length === 0 ? (
-                        <span className="text-sm italic text-gray-500">
+                        <span className="text-sm italic text-muted-foreground">
                             No diagnosis found
                         </span>
                     ) : (
@@ -105,7 +105,7 @@ export const MedicalHistory = ({ data, isShowProfile }: DataProps) => {
                 </td>
                 <td className="hidden 2xl:table-cell">
                     {item?.lab_test?.length === 0 ? (
-                        <span className="text-sm italic text-gray-500">
+                        <span className="text-sm italic text-muted-foreground">
                             No lab test found
                         </span>
                     ) : (
@@ -126,11 +126,11 @@ export const MedicalHistory = ({ data, isShowProfile }: DataProps) => {
 
     return (
         <>
-            <div className="bg-white rounded-xl p-2 2xl:p-6">
+            <div className="bg-card rounded-xl p-2 2xl:p-6">
                 <div className="">
                     <h1 className="font-semibold text-xl">Medical History (All)</h1>
                     <div className="hidden lg:flex items-center gap-1">
-                        <BriefcaseBusiness size={20} className="text-gray-500" />
+                        <BriefcaseBusiness size={20} className="text-muted-foreground" />
                         <p className="text-2xl font-semibold">{data?.length}</p>
                         <span className="text-gray-600 text-sm xl:text-base">
                             total records
@@ -142,3 +142,4 @@ export const MedicalHistory = ({ data, isShowProfile }: DataProps) => {
         </>
     );
 };
+

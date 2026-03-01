@@ -28,8 +28,8 @@ const AdminDashboard = async () => {
       title: "Patients",
       value: totalPatient,
       icon: Users,
-      className: "bg-blue-600/15",
-      iconClassName: "bg-blue-600/25 text-blue-600",
+      className: "bg-primary/15",
+      iconClassName: "bg-primary/25 text-primary",
       note: "Total patients",
       link: "/manage-patients",
     },
@@ -66,7 +66,7 @@ const AdminDashboard = async () => {
     <div className="py-6 px-3 flex flex-col xl:flex-row rounded-xl gap-6">
       {/* LEFT */}
       <div className="w-full xl:w-[69%]">
-        <div className="bg-white rounded-xl p-4 mb-8">
+        <div className="bg-card rounded-xl p-4 mb-8">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-lg font-semibold">Statistics</h1>
             <Button size={"sm"} variant={"outline"}>
@@ -94,7 +94,7 @@ const AdminDashboard = async () => {
           <AppointmentChart data={monthlyData!} />
         </div>
 
-        <div className="bg-white rounded-xl p-4 mt-8">
+        <div className="bg-card rounded-xl p-4 mt-8">
           <RecentAppointments data={last5Records!} />
         </div>
       </div>
@@ -113,3 +113,4 @@ const AdminDashboard = async () => {
 };
 
 export default AdminDashboard;
+

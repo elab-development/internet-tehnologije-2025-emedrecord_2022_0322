@@ -21,7 +21,7 @@ const ItemCard = ({ label, value }: { label: string; value: string }) => {
   return (
     <div className="w-full">
       <p className="text-lg xl:text-xl font-medium">{value}</p>
-      <p className="text-sm xl:text-base text-gray-500">{label}</p>
+      <p className="text-sm xl:text-base text-muted-foreground">{label}</p>
     </div>
   );
 };
@@ -122,3 +122,4 @@ export const VitalSigns = async ({
     </section>
   );
 };
+

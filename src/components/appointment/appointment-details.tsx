@@ -34,9 +34,10 @@ export const AppointmentDetails = ({
 
         <div>
           <span className="text-sm font-medium">Additional Notes</span>
-          <p className="text-sm text-gray-500">{notes || "No notes"}</p>
+          <p className="text-sm text-muted-foreground">{notes || "No notes"}</p>
         </div>
       </CardContent>
     </Card>
   );
 };
+

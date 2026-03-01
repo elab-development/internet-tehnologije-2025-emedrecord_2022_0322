@@ -30,8 +30,8 @@ const DoctorDashboard = async () => {
       title: "Patients",
       value: totalPatient,
       icon: Users,
-      className: "bg-blue-600/15",
-      iconClassName: "bg-blue-600/25 text-blue-600",
+      className: "bg-primary/15",
+      iconClassName: "bg-primary/25 text-primary",
       note: "Total patients",
       link: "/record/patients",
     },
@@ -68,7 +68,7 @@ const DoctorDashboard = async () => {
     <div className="rounded-xl py-6 px-3 flex flex-col xl:flex-row gap-6">
       {/* LEFT */}
       <div className="w-full xl:w-[69%]">
-        <div className="bg-white rounded-xl p-4 mb-8">
+        <div className="bg-card rounded-xl p-4 mb-8">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-lg xl:text-2xl font-semibold">
               Welcome, Dr. {user?.firstName}
@@ -98,7 +98,7 @@ const DoctorDashboard = async () => {
           <AppointmentChart data={monthlyData!} />
         </div>
 
-        <div className="bg-white rounded-xl p-4 mt-8">
+        <div className="bg-card rounded-xl p-4 mt-8">
           <RecentAppointments data={last5Records!} />
         </div>
       </div>
@@ -116,3 +116,4 @@ const DoctorDashboard = async () => {
 };
 
 export default DoctorDashboard;
+

@@ -83,23 +83,25 @@ export const AppointmentActionDialog = ({
 
       <DialogContent>
         <div className="flex flex-col items-center justify-center py-6">
+          {type === "approve" ? (
+            <div className="bg-emerald-200 p-4 rounded-full mb-2">
+              <GiConfirmed size={50} className="text-emerald-500" />
+            </div>
+          ) : (
+            <div className="bg-red-200 p-4 rounded-full mb-2">
+              <MdCancel size={50} className="text-red-500" />
+            </div>
+          )}
+
           <DialogTitle>
-            {type === "approve" ? (
-              <div className="bg-emerald-200 p-4 rounded-full mb-2">
-                <GiConfirmed size={50} className="text-emerald-500" />
-              </div>
-            ) : (
-              <div className="bg-red-200 p-4 rounded-full mb-2">
-                <MdCancel size={50} className="text-red-500" />
-              </div>
-            )}
+            Appointment {type === "approve" ? "Confirmation" : "Cancellation"}
           </DialogTitle>
 
           <span className="text-xl text-black">
             Appointment
             {type === "approve" ? " Confirmation" : " Cancellation"}
           </span>
-          <p className="text-sm text-center text-gray-500">
+          <p className="text-sm text-center text-muted-foreground">
             {type === "approve" 
               ? "You're about to confirm this appointment. Confirm to approve or No to cancel."
               : "Are you sure you want to cancel this appointment?"}
@@ -122,7 +124,7 @@ export const AppointmentActionDialog = ({
               className={cn(
                 "px-4 py-2 text-sm font-medium text-white hover:text-white hover:underline",
                 type === "approve"
-                  ? "bg-blue-600 hover:bg-blue-700"
+                  ? "bg-primary hover:bg-primary/90"
                   : "bg-destructive hover:bg-destructive"
               )}
             >
@@ -131,7 +133,7 @@ export const AppointmentActionDialog = ({
             <DialogClose asChild>
               <Button
                 variant="outline"
-                className="px-4 py-2 text-sm underline text-gray-500"
+                className="px-4 py-2 text-sm underline text-muted-foreground"
               >
                 No
               </Button>
@@ -142,3 +144,4 @@ export const AppointmentActionDialog = ({
     </Dialog>
   );
 };
+

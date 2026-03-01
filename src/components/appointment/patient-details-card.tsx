@@ -7,7 +7,7 @@ import { format } from "date-fns";
 
 export const PatientDetailsCard = ({ data }: { data: Patient }) => {
   return (
-    <Card className="shadow-none bg-white">
+    <Card className="shadow-none bg-card">
       <CardHeader>
         <CardTitle>Patient Details</CardTitle>
         <div className="relative size-20 xl:size-24 rounded-full overflow-hidden">
@@ -24,10 +24,10 @@ export const PatientDetailsCard = ({ data }: { data: Patient }) => {
           <h2 className="text-lg font-semibold">
             {data?.first_name} {data?.last_name}
           </h2>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-muted-foreground">
             {data?.email} - {data?.phone}
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-muted-foreground">
             {data?.gender} - {calculateAge(data?.date_of_birth)}
           </p>
         </div>
@@ -37,7 +37,7 @@ export const PatientDetailsCard = ({ data }: { data: Patient }) => {
         <div className="flex items-start gap-3">
           <Calendar size={22} className="text-0gray-400" />
           <div>
-            <p className="text-sm text-gray-500">Date of Birth</p>
+            <p className="text-sm text-muted-foreground">Date of Birth</p>
             <p className="text-base font-medium text-muted-foreground">
               {format(new Date(data?.date_of_birth), "MMM d, yyyy")}
             </p>
@@ -46,7 +46,7 @@ export const PatientDetailsCard = ({ data }: { data: Patient }) => {
         <div className="flex items-start gap-3">
           <Home size={22} className="text-0gray-400" />
           <div>
-            <p className="text-sm text-gray-500">Address</p>
+            <p className="text-sm text-muted-foreground">Address</p>
             <p className="text-base font-medium text-muted-foreground">
               {data?.address}
             </p>
@@ -55,7 +55,7 @@ export const PatientDetailsCard = ({ data }: { data: Patient }) => {
         <div className="flex items-start gap-3">
           <Mail size={22} className="text-0gray-400" />
           <div>
-            <p className="text-sm text-gray-500">Email</p>
+            <p className="text-sm text-muted-foreground">Email</p>
             <p className="text-base font-medium text-muted-foreground">
               {data?.email}
             </p>
@@ -64,7 +64,7 @@ export const PatientDetailsCard = ({ data }: { data: Patient }) => {
         <div className="flex items-start gap-3">
           <Phone size={22} className="text-0gray-400" />
           <div>
-            <p className="text-sm text-gray-500">Phone</p>
+            <p className="text-sm text-muted-foreground">Phone</p>
             <p className="text-base font-medium text-muted-foreground">
               {data?.phone}
             </p>
@@ -73,7 +73,7 @@ export const PatientDetailsCard = ({ data }: { data: Patient }) => {
         <div className="flex items-start gap-3">
           <Info size={22} className="text-0gray-400" />
           <div>
-            <p className="text-sm text-gray-500">Physician</p>
+            <p className="text-sm text-muted-foreground">Physician</p>
             <p className="text-base font-medium text-muted-foreground">
               Dr Codewave, MBBS, FCPS
             </p>
@@ -81,7 +81,7 @@ export const PatientDetailsCard = ({ data }: { data: Patient }) => {
         </div>
         <div className="flex items-start gap-3">
           <div>
-            <p className="text-sm text-gray-500">Active Conditions</p>
+            <p className="text-sm text-muted-foreground">Active Conditions</p>
             <p className="text-base font-medium text-muted-foreground">
               {data?.medical_conditions}
             </p>
@@ -89,7 +89,7 @@ export const PatientDetailsCard = ({ data }: { data: Patient }) => {
         </div>
         <div className="flex items-start gap-3">
           <div>
-            <p className="text-sm text-gray-500">Allergies</p>
+            <p className="text-sm text-muted-foreground">Allergies</p>
             <p className="text-base font-medium text-muted-foreground">
               {data?.allergies}
             </p>
@@ -99,3 +99,4 @@ export const PatientDetailsCard = ({ data }: { data: Patient }) => {
     </Card>
   );
 };
+

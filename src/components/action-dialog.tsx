@@ -61,13 +61,12 @@ export const ActionDialog = ({
 
         <DialogContent>
           <div className="flex flex-col items-center justify-center py-6">
-            <DialogTitle>
-              <div className="bg-red-200 p-4 rounded-full mb-2">
-                <FaQuestion size={50} className="text-red-500" />
-              </div>
-            </DialogTitle>
+            <div className="bg-red-200 p-4 rounded-full mb-2">
+              <FaQuestion size={50} className="text-red-500" />
+            </div>
 
-            <span className="text-xl text-black">Delete Confirmation</span>
+            <DialogTitle>Delete Confirmation</DialogTitle>
+
             <p className="text-sm">
               Are you sure you want to delete the selected record?
             </p>
@@ -100,7 +99,7 @@ export const ActionDialog = ({
         <DialogTrigger asChild>
           <Button
             variant={"outline"}
-            className="flex items-center justify-center rounded-full text-blue-600/10 text-blue-600 hover:underline"
+            className="flex items-center justify-center rounded-full text-primary/10 text-primary hover:underline"
           >
             View
           </Button>
@@ -156,4 +155,5 @@ export const ActionDialog = ({
   }
   return null;
 };
+
 

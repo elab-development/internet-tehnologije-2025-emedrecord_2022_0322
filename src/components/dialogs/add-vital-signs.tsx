@@ -81,7 +81,7 @@ export const AddVitalSigns = ({
       <Dialog>
         <DialogTrigger asChild>
           <Button size="sm" variant="outline" className="text-sm font-normal">
-            <Plus size={22} className="text-gray-500" /> Add Vital Signs
+            <Plus size={22} className="text-muted-foreground" /> Add Vital Signs
           </Button>
         </DialogTrigger>
 
@@ -176,3 +176,4 @@ export const AddVitalSigns = ({
     </>
   );
 };
+

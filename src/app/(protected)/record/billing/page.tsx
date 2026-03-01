@@ -159,10 +159,10 @@ const BillingPage = async (props: SearchParamsProps) => {
   };
 
   return (
-    <div className="bg-white rounded-xl py-6 px-3 2xl:px-6">
+    <div className="bg-card rounded-xl py-6 px-3 2xl:px-6">
       <div className="flex items-center justify-between">
         <div className="hidden lg:flex items-center gap-1">
-          <ReceiptText size={20} className="text-gray-500" />
+          <ReceiptText size={20} className="text-muted-foreground" />
 
           <p className="text-2xl font-semibold">{totalRecords}</p>
           <span className="text-gray-600 text-sm xl:text-base">
@@ -189,3 +189,4 @@ const BillingPage = async (props: SearchParamsProps) => {
 };
 
 export default BillingPage;
+

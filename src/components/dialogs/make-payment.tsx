@@ -97,7 +97,7 @@ export const MakePaymentDialog = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="text-sm font-normal">
-          <CreditCard size={18} className="text-gray-500 mr-1" />
+          <CreditCard size={18} className="text-muted-foreground mr-1" />
           Record Payment
         </Button>
       </DialogTrigger>
@@ -113,11 +113,11 @@ export const MakePaymentDialog = ({
           <form onSubmit={form.handleSubmit(handleOnSubmit)} className="space-y-6">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-gray-500">Total Payable</span>
+                <span className="text-muted-foreground">Total Payable</span>
                 <p className="text-lg font-semibold">${totalPayable.toFixed(2)}</p>
               </div>
               <div>
-                <span className="text-gray-500">Already Paid</span>
+                <span className="text-muted-foreground">Already Paid</span>
                 <p className="text-lg font-semibold text-emerald-600">
                   ${amountPaid.toFixed(2)}
                 </p>
@@ -167,7 +167,7 @@ export const MakePaymentDialog = ({
               )}
             />
 
-            <Button type="submit" disabled={isLoading} className="w-full bg-blue-600">
+            <Button type="submit" disabled={isLoading} className="w-full bg-primary">
               {isLoading ? "Processing..." : "Confirm Payment"}
             </Button>
           </form>
@@ -176,3 +176,4 @@ export const MakePaymentDialog = ({
     </Dialog>
   );
 };
+

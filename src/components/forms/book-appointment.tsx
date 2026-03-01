@@ -82,7 +82,7 @@ export const BookAppointment = ({
       <SheetTrigger asChild>
         <Button
           variant="ghost"
-          className="w-full flex items-center gap-2 justify-start text-sm font-light bg-blue-600 text-white"
+          className="w-full flex items-center gap-2 justify-start text-sm font-light bg-primary text-white"
         >
           <UserPen size={16} /> Book Appointment
         </Button>
@@ -114,7 +114,7 @@ export const BookAppointment = ({
 
                   <div>
                     <p className="font-semibold text-lg">{patientName}</p>
-                    <span className="text-sm text-gray-500 capitalize">
+                    <span className="text-sm text-muted-foreground capitalize">
                       {data?.gender}
                     </span>
                   </div>
@@ -203,7 +203,7 @@ export const BookAppointment = ({
                 <Button
                   disabled={isSubmitting}
                   type="submit"
-                  className="bg-blue-600 w-full"
+                  className="bg-primary w-full"
                 >
                   Submit
                 </Button>
@@ -215,3 +215,4 @@ export const BookAppointment = ({
     </Sheet>
   );
 };
+

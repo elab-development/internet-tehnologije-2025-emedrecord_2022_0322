@@ -115,14 +115,14 @@ const PatientList = async (props: SearchParamsProps) => {
           {lastVisit ? (
             format(lastVisit?.created_at, "yyyy-MM-dd HH:mm:ss")
           ) : (
-            <span className="text-gray-400 italic">No last visit</span>
+            <span className="text-muted-foreground/80 italic">No last visit</span>
           )}
         </td>
         <td className="hidden xl:table-cell">
           {lastVisit ? (
             lastVisit?.treatment_plan
           ) : (
-            <span className="text-gray-400 italic">No last treatment</span>
+            <span className="text-muted-foreground/80 italic">No last treatment</span>
           )}
         </td>
         <td>
@@ -152,10 +152,10 @@ const PatientList = async (props: SearchParamsProps) => {
   };
 
   return (
-    <div className="bg-white rounded-xl py-6 px-3 2xl:px-6">
+    <div className="bg-card rounded-xl py-6 px-3 2xl:px-6">
       <div className="flex items-center justify-between">
         <div className="hidden lg:flex items-center gap-1">
-          <Users size={20} className="text-gray-500" />
+          <Users size={20} className="text-muted-foreground" />
 
           <p className="text-2xl font-semibold">{totalRecords}</p>
           <span className="text-gray-600 text-sm xl:text-base">
@@ -184,3 +184,4 @@ const PatientList = async (props: SearchParamsProps) => {
 };
 
 export default PatientList;
+
