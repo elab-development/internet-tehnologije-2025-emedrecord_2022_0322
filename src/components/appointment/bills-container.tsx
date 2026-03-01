@@ -73,7 +73,9 @@ export const BillsContainer = async ({ id }: { id: string }) => {
 
   const isAdmin = await checkRole("ADMIN");
   const isDoctor = await checkRole("DOCTOR");
+  const isNurse = await checkRole("NURSE");
   const canDeleteBills = isAdmin || isDoctor;
+  const canManageBills = isAdmin || isDoctor || isNurse;
 
   let totalBills = 0;
 
@@ -134,7 +136,7 @@ export const BillsContainer = async ({ id }: { id: string }) => {
           </div>
         </div>
 
-        {canDeleteBills && (
+        {canManageBills && (
           <div className="flex items-center gap-2 mt-5 justify-end flex-wrap">
             <AddBills id={data?.id} appId={id} servicesData={servicesData} />
 
