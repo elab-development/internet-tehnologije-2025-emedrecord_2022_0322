@@ -53,6 +53,10 @@ NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
 NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
 
 DATABASE_URL="postgresql://neondb_owner:npg_m0v9cNQFMlLu@ep-purple-band-ag9lp5pp-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=verify-full&channel_binding=require"
+```
+
+Important:
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` is required both at runtime and at Docker build time.
 
 
 ## 3) Database setup (development)
@@ -85,6 +89,33 @@ Production build locally:
 ```bash
 npm run build
 npm run start
+```
+
+## Docker (optional)
+
+Build app image:
+
+```bash
+docker compose --progress=plain build app
+```
+
+Start app + db:
+
+```bash
+docker compose up -d
+```
+
+View logs:
+
+```bash
+docker compose logs -f app
+docker compose logs -f db
+```
+
+Stop containers:
+
+```bash
+docker compose down
 ```
 
 ## 5) Automated tests
