@@ -12,6 +12,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 
+export const dynamic = "force-dynamic";
+
 const DoctorDashboard = async () => {
   const user = await currentUser();
 

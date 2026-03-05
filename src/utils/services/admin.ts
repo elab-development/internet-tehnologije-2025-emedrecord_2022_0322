@@ -72,7 +72,23 @@ export async function getAdminDashboardStats() {
   } catch (error) {
     console.log(error);
 
-    return { error: true, message: "Something went wrong" };
+    return {
+      success: false,
+      message: "Something went wrong",
+      totalPatient: 0,
+      totalDoctors: 0,
+      appointmentCounts: {
+        PENDING: 0,
+        SCHEDULED: 0,
+        COMPLETED: 0,
+        CANCELLED: 0,
+      },
+      availableDoctors: [],
+      monthlyData: [],
+      last5Records: [],
+      totalAppointments: 0,
+      status: 500,
+    };
   }
 }
 

@@ -12,6 +12,8 @@ import { auth } from "@clerk/nextjs/server";
 import { BriefcaseBusiness, BriefcaseMedical, Link, User, Users } from "lucide-react";
 import React from "react";
 
+export const dynamic = "force-dynamic";
+
 const AdminDashboard = async () => {
   const {
     availableDoctors,
