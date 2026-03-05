@@ -10,7 +10,23 @@ export async function getDoctors() {
     return { success: true, data, status: 200 };
   } catch (error) {
     console.log(error);
-    return { success: false, message: "Internal Server Error", status: 500 };
+    return {
+      success: false,
+      message: "Internal Server Error",
+      status: 500,
+      totalNurses: 0,
+      totalPatient: 0,
+      appointmentCounts: {
+        PENDING: 0,
+        SCHEDULED: 0,
+        COMPLETED: 0,
+        CANCELLED: 0,
+      },
+      last5Records: [],
+      availableDoctors: [],
+      totalAppointment: 0,
+      monthlyData: [],
+    };
   }
 }
 export async function getDoctorDashboardStats() {
