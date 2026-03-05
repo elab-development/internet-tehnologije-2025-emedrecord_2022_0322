@@ -36,7 +36,7 @@ export const availableDays = ({ data }: { data: Days[] }) => {
 };
 export const AvailableDoctors = async ({ data }: DataProps) => {
   return (
-    <div className="bg-white rounded-xl p-4">
+    <div className="bg-card rounded-xl p-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-lg font-semibold">Available Doctors</h1>
 
@@ -82,3 +82,4 @@ export const AvailableDoctors = async ({ data }: DataProps) => {
     </div>
   );
 };
+

@@ -113,7 +113,7 @@ export const PaymentsContainer = async ({
   };
 
   return (
-    <div className="bg-white rounded-xl p-2 md:p-4 2xl:p-6">
+    <div className="bg-card rounded-xl p-2 md:p-4 2xl:p-6">
       <div className="flex items-center justify-between">
         <div className="hidden lg:flex items-center gap-1">
           <p className="text-2xl font-semibold">{data?.length ?? 0}</p>
@@ -127,3 +127,4 @@ export const PaymentsContainer = async ({
     </div>
   );
 };
+

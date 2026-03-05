@@ -31,13 +31,13 @@ export const AppointmentActionOptions = async ({
           variant="outline"
           className="flex items-center justify-center rounded-full p-1"
         >
-          <EllipsisVertical size={16} className="text-sm text-gray-500" />
+          <EllipsisVertical size={16} className="text-sm text-muted-foreground" />
         </Button>
       </PopoverTrigger>
 
       <PopoverContent className="w-56 p-3">
         <div className="space-y-3 flex flex-col items-start">
-          <span className="text-gray-400 text-xs">Perform Actions</span>
+          <span className="text-muted-foreground/80 text-xs">Perform Actions</span>
           <Button
             size="sm"
             variant="ghost"

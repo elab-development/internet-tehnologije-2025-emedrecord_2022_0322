@@ -1,5 +1,6 @@
 "use server";
 
+import { enforceCsrfProtection, sanitizePayload } from "@/lib/security";
 import { db } from "@/lib/prisma";
 import { DoctorSchema, ServicesSchema, StaffSchema, WorkingDaysSchema } from "@/lib/schema";
 import { generateRandomColor } from "@/utils";
@@ -9,6 +10,8 @@ import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export async function createNewDoctor(data: any) {
   try {
+    await enforceCsrfProtection();
+
     const values = DoctorSchema.safeParse(data);
 
     const workingDaysValues = WorkingDaysSchema.safeParse(data?.work_schedule);
@@ -21,7 +24,7 @@ export async function createNewDoctor(data: any) {
       };
     }
 
-    const validatedValues = values.data;
+    const validatedValues = sanitizePayload(values.data);
     const workingDayData = workingDaysValues.data!;
 
     if (!validatedValues.password) {
@@ -74,6 +77,8 @@ export async function createNewDoctor(data: any) {
 }
 export async function createNewStaff(data: any) {
   try {
+    await enforceCsrfProtection();
+
     const { userId } = await auth();
 
     if (!userId) {
@@ -97,7 +102,7 @@ export async function createNewStaff(data: any) {
       };
     }
 
-    const validatedValues = values.data;
+    const validatedValues = sanitizePayload(values.data);
 
     const client = await clerkClient();
 
@@ -140,6 +145,8 @@ export async function createNewStaff(data: any) {
 
 export async function assignExistingNurseToDoctor(nurseId: string) {
   try {
+    await enforceCsrfProtection();
+
     const { userId } = await auth();
 
     if (!userId) {
@@ -199,9 +206,18 @@ export async function assignExistingNurseToDoctor(nurseId: string) {
 }
 export async function addNewService(data: any) {
   try {
+    await enforceCsrfProtection();
+
     const isValidData = ServicesSchema.safeParse(data);
 
-    const validatedData = isValidData.data;
+    if (!isValidData.success) {
+      return {
+        success: false,
+        msg: "Invalid data provided",
+      };
+    }
+
+    const validatedData = sanitizePayload(isValidData.data);
 
     await db.services.create({
       data: { ...validatedData!, price: Number(data.price!) },
@@ -220,6 +236,8 @@ export async function addNewService(data: any) {
 
 export async function unassignNurseFromDoctor(nurseId: string) {
   try {
+    await enforceCsrfProtection();
+
     const { userId } = await auth();
 
     if (!userId) {

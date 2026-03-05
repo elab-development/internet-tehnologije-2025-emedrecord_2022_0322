@@ -25,7 +25,7 @@ export const ActionOptions = ({ children }: { children: React.ReactNode }) => {
 };
 
 const className =
-  "flex items-center justify-center rounded-full bg-blue-600/10 hover:underline text-blue-600 px-1.5 py-1 text-xs md:text-sm disabled:text-gray-400 disabled:hover:no-underline disabled:cursor-not-allowed";
+  "action-pill disabled:cursor-not-allowed disabled:border-border/60 disabled:bg-muted disabled:text-muted-foreground";
 
 export const ViewAction = ({
   href,
@@ -36,7 +36,7 @@ export const ViewAction = ({
 }) => {
   return (
     <Link href={href}>
-      <button disabled={disabled} className={className}>
+      <button type="button" disabled={disabled} className={className}>
         View
       </button>
     </Link>

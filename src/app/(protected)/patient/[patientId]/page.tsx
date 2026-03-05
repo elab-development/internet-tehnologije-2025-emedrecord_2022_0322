@@ -38,10 +38,10 @@ const PatientProfile = async (props: ParamsProps) => {
   );
 
   return (
-    <div className="bg-gray-100/60 h-full rounded-xl py-6 px-3 2xl:p-6 flex flex-col lg:flex-row gap-6">
+    <div className="bg-background/90 h-full rounded-xl py-6 px-3 2xl:p-6 flex flex-col lg:flex-row gap-6">
       <div className="w-full xl:w-3/4">
         <div className="w-full flex flex-col lg:flex-row gap-4">
-          <Card className="bg-white rounded-xl p-4 w-full lg:w-[30%] border-none flex flex-col items-center">
+          <Card className="bg-card rounded-xl p-4 w-full lg:w-[30%] border-none flex flex-col items-center">
             <ProfileImage
               url={data?.img!}
               name={data?.first_name + " " + data?.last_name}
@@ -62,7 +62,7 @@ const PatientProfile = async (props: ParamsProps) => {
             </div>
           </Card>
 
-          <Card className="bg-white rounded-xl p-6 w-full lg:w-[70%] border-none space-y-6">
+          <Card className="bg-card rounded-xl p-6 w-full lg:w-[70%] border-none space-y-6">
             <div className="flex flex-col md:flex-row md:flex-wrap md:items-center xl:justify-between gap-y-4 md:gap-x-0">
               <SmallCard
                 label={"Gender"}
@@ -110,38 +110,38 @@ const PatientProfile = async (props: ParamsProps) => {
         </div>
       </div>
       <div className="w-full xl:w-1/3">
-        <div className="bg-white p-4 rounded-md mb-8">
+        <div className="bg-card p-4 rounded-md mb-8">
           <h1 className="text-xl font-semibold">Quick Links</h1>
 
-          <div className="mt-4 flex gap-4 flex-wrap text-xs text-gray-500">
+          <div className="mt-4 flex gap-3 flex-wrap">
             <Link
-              className="p-3 rounded-md bg-yellow-50 hover:underline"
+              className="quick-link-chip"
               href={`/record/appointments?id=${id}`}
             >
               Patient&apos;s Appointments
             </Link>
             <Link
-              className="p-3 rounded-md bg-purple-50 hover:underline"
+              className="quick-link-chip"
               href="?cat=medical-history"
             >
               Medical Records
             </Link>
             <Link
-              className="p-3 rounded-md bg-violet-100"
+              className="quick-link-chip"
               href={`?cat=payments`}
             >
               Medical Bills
             </Link>
-            <Link className="p-3 rounded-md bg-pink-50" href={`/`}>
+            <Link className="quick-link-chip" href={`/`}>
               Dashboard
             </Link>
 
-            <Link className="p-3 rounded-md bg-rose-100" href={`#`}>
+            <Link className="quick-link-chip" href={`#`}>
               Lab Test & Result
             </Link>
             {patientId === "self" && (
               <Link
-                className="p-3 rounded-md bg-black/10"
+                className="quick-link-chip"
                 href={`/patient/registration`}
               >
                 Edit Information

@@ -25,8 +25,8 @@ export const ViewAppointment = async ({ id }: { id: string | undefined }) => {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          variant="outline"
-          className="flex items-center justify-center rounded-full bg-blue-500/10 hover:underline text-blue-600 px-1.5 py-1 text-xs md:text-sm"
+          variant="ghost"
+          className="action-pill"
         >
           View
         </Button>
@@ -54,7 +54,7 @@ export const ViewAppointment = async ({ id }: { id: string | undefined }) => {
           )}
 
           <div className="grid gap-4 py-4">
-            <p className="w-fit bg-blue-100 text-blue-600 py-1 rounded text-xs md:text-sm">
+            <p className="w-fit bg-blue-100 text-primary py-1 rounded text-xs md:text-sm">
               Personal Information
             </p>
 
@@ -75,54 +75,54 @@ export const ViewAppointment = async ({ id }: { id: string | undefined }) => {
                   </h2>
 
                   <p className="flex items-center gap-2 text-gray-600">
-                    <Calendar size={20} className="text-gray-500" />
+                    <Calendar size={20} className="text-muted-foreground" />
                     {calculateAge(data?.patient?.date_of_birth)}
                   </p>
 
                   <span className="flex items-center text-sm gap-2">
-                    <Phone size={16} className="text-gray-500" />
+                    <Phone size={16} className="text-muted-foreground" />
                     {data?.patient?.phone}
                   </span>
                 </div>
               </div>
 
               <div>
-                <span className="text-sm text-gray-500">Address</span>
+                <span className="text-sm text-muted-foreground">Address</span>
                 <p className="text-gray-600 capitalize">
                   {data?.patient?.address}
                 </p>
               </div>
             </div>
 
-            <p className="w-fit bg-blue-100 text-blue-600 py-1 rounded text-xs md:text-sm">
+            <p className="w-fit bg-blue-100 text-primary py-1 rounded text-xs md:text-sm">
               Appointment Information
             </p>
 
             <div className="grid grid-cols-3 gap-10">
               <div>
-                <span className="text-sm text-gray-500">Date</span>
+                <span className="text-sm text-muted-foreground">Date</span>
                 <p className="text-sm text-gray-600">
                   {format(data?.appointment_date, "MMM dd, yyyy")}
                 </p>
               </div>
               <div>
-                <span className="text-sm text-gray-500">Time</span>
+                <span className="text-sm text-muted-foreground">Time</span>
                 <p>{data?.time}</p>
               </div>
               <div>
-                <span className="text-sm text-gray-500">Status</span>
+                <span className="text-sm text-muted-foreground">Status</span>
                 <AppointmentStatusIndicator status={data?.status} />
               </div>
             </div>
 
             {data?.note && (
               <div>
-                <span className="text-sm text-gray-500">Note from Patient</span>
+                <span className="text-sm text-muted-foreground">Note from Patient</span>
                 <p>{data?.note}</p>
               </div>
             )}
 
-            <p className="w-fit bg-blue-100 text-blue-600 py-1 px-2 rounded text-xs md:text-sm mt-16">
+            <p className="w-fit bg-blue-100 text-primary py-1 px-2 rounded text-xs md:text-sm mt-16">
               Physician Information
             </p>
             <div className="w-full flex flex-col md:flex-row gap-8 mb-8">
@@ -146,7 +146,7 @@ export const ViewAppointment = async ({ id }: { id: string | undefined }) => {
 
             {(isAdmin || isNurse || data?.doctor_id === userId) && (
               <>
-                <p className="w-fit bg-blue-100 text-blue-600 py-1 px-2 rounded text-xs md:text-sm mt-4">
+                <p className="w-fit bg-blue-100 text-primary py-1 px-2 rounded text-xs md:text-sm mt-4">
                   Perform Action
                 </p>
                 <AppointmentAction id={data.id} status={data?.status} />
@@ -158,3 +158,4 @@ export const ViewAppointment = async ({ id }: { id: string | undefined }) => {
     </Dialog>
   );
 };
+

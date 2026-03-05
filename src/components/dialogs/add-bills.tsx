@@ -105,7 +105,7 @@ export const AddBills = ({ id, appId, servicesData }: DataProps) => {
       <Dialog>
         <DialogTrigger asChild>
           <Button size="sm" className="text-sm font-normal">
-            <Plus size={22} className="text-gray-400" />
+            <Plus size={22} className="text-muted-foreground/80" />
             Add Bill
           </Button>
         </DialogTrigger>
@@ -170,7 +170,7 @@ export const AddBills = ({ id, appId, servicesData }: DataProps) => {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="bg-blue-600 w-full"
+                className="bg-primary w-full"
               >
                 Submit
               </Button>
@@ -181,3 +181,4 @@ export const AddBills = ({ id, appId, servicesData }: DataProps) => {
     </>
   );
 };
+

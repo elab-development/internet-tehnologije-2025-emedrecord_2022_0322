@@ -3,6 +3,7 @@
 import { VitalSignsFormData } from "@/components/dialogs/add-vital-signs";
 import { nurseCanAccessAppointment } from "@/lib/permissions";
 import {db} from "@/lib/prisma";
+import { enforceCsrfProtection, sanitizePayload } from "@/lib/security";
 import { AppointmentSchema, VitalSignsSchema } from "@/lib/schema";
 import { checkRole, getNurseDoctorId } from "@/utils/roles";
 import { auth } from "@clerk/nextjs/server";
@@ -10,6 +11,8 @@ import { AppointmentStatus } from "@prisma/client";
 
 export async function createNewAppointment(data: any) {
   try {
+    await enforceCsrfProtection();
+
     const { userId } = await auth();
 
     if (!userId) {
@@ -30,7 +33,7 @@ export async function createNewAppointment(data: any) {
     if (!validatedData.success) {
       return { success: false, msg: "Invalid data" };
     }
-    const validated = validatedData.data;
+    const validated = sanitizePayload(validatedData.data);
 
     if (isDoctor && validated.doctor_id !== userId) {
       return { success: false, msg: "Unauthorized" };
@@ -51,13 +54,15 @@ export async function createNewAppointment(data: any) {
       return { success: false, msg: "Unauthorized" };
     }
 
+    const appointmentDate = new Date(validated.appointment_date);
+
     await db.appointment.create({
       data: {
         patient_id: data.patient_id,
         doctor_id: validated.doctor_id,
         time: validated.time,
         type: validated.type,
-        appointment_date: new Date(validated.appointment_date),
+        appointment_date: appointmentDate,
         note: validated.note,
       },
     });
@@ -78,6 +83,8 @@ export async function appointmentAction(
   reason: string
 ) {
   try {
+    await enforceCsrfProtection();
+
     const { userId } = await auth();
 
     if (!userId) {
@@ -114,7 +121,7 @@ export async function appointmentAction(
       where: { id: Number(id) },
       data: {
         status,
-        reason,
+        reason: sanitizePayload(reason),
       },
     });
 
@@ -135,6 +142,8 @@ export async function addVitalSigns(
   doctorId: string
 ) {
   try {
+    await enforceCsrfProtection();
+
     const { userId } = await auth();
 
     if (!userId) {
@@ -164,7 +173,7 @@ export async function addVitalSigns(
       }
     }
 
-    const validatedData = VitalSignsSchema.parse(data);
+    const validatedData = sanitizePayload(VitalSignsSchema.parse(data));
 
     let medicalRecord = null;
 

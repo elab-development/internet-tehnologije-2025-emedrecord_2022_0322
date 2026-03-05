@@ -80,7 +80,7 @@ export const AddDiagnosis = ({
           <Button
             variant={"outline"}
             size={"lg"}
-            className="bg-blue-600 text-white mt-4"
+            className="bg-primary text-white mt-4"
           >
             <Plus size={22} className="text-white" />
             Add Diagnosis
@@ -151,7 +151,7 @@ export const AddDiagnosis = ({
               <Button
                 type="submit"
                 disabled={loading}
-                className="bg-blue-600 w-full"
+                className="bg-primary w-full"
               >
                 Submit
               </Button>
@@ -162,3 +162,4 @@ export const AddDiagnosis = ({
     </>
   );
 };
+

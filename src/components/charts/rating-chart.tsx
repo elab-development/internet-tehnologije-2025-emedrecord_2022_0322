@@ -17,7 +17,7 @@ export const RatingChart = ({
   ];
 
   return (
-    <div className="bg-white p-4 rounded-md h-80 relative">
+    <div className="bg-card p-4 rounded-md h-80 relative">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Ratings</h1>
       </div>
@@ -39,7 +39,7 @@ export const RatingChart = ({
 
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
         <h1 className="text-2xl font-bold">{averageRating?.toFixed(1)}</h1>
-        <p className="text-xs text-gray-500">of max ratings</p>
+        <p className="text-xs text-muted-foreground">of max ratings</p>
       </div>
 
       <h2 className="font-medium absolute bottom-16 left-0 right-0 m-auto text-center">
@@ -48,4 +48,5 @@ export const RatingChart = ({
     </div>
   );
 };
+
 

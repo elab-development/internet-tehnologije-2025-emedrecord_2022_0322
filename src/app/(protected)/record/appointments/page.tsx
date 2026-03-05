@@ -147,10 +147,10 @@ const Appointments = async (props: {
   };
 
   return (
-    <div className="bg-white rounded-xl p-2 md:p-4 2xl:p-6">
+    <div className="bg-card rounded-xl p-2 md:p-4 2xl:p-6">
       <div className="flex items-center justify-between">
         <div className="hidden lg:flex items-center gap-1">
-          <BriefcaseBusiness size={20} className="text-gray-500" />
+          <BriefcaseBusiness size={20} className="text-muted-foreground" />
           <p className="text-2xl font-semibold">{totalRecord ?? 0}</p>
           <span className="text-gray-600 text-sm xl:text-base">
             total appointments
@@ -181,3 +181,4 @@ const Appointments = async (props: {
 };
 
 export default Appointments;
+

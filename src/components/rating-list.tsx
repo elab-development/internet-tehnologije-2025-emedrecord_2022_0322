@@ -12,7 +12,7 @@ interface DataProps {
 
 export const RatingList = ({ data }: { data: any[] }) => {
   return (
-    <div className="bg-white rounded-lg">
+    <div className="bg-card rounded-lg">
       <div className="flex items-center justify-between p-4">
         <h1 className="text-xl font-semibold">Patient Reviews</h1>
       </div>
@@ -25,7 +25,7 @@ export const RatingList = ({ data }: { data: any[] }) => {
                 <p className="text-base font-medium">
                   {rate?.patient?.first_name + " " + rate?.patient?.last_name}
                 </p>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-muted-foreground">
                   {new Date(rate?.created_at).toLocaleDateString()}
                 </span>
               </div>
@@ -52,3 +52,4 @@ export const RatingList = ({ data }: { data: any[] }) => {
     </div>
   );
 };
+

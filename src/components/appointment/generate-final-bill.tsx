@@ -65,7 +65,7 @@ export const GenerateFinalBills = ({ id, total_bill }: DataProps) => {
   if (!id) {
     return (
       <Button variant="outline" size="sm" className="text-sm font-normal" disabled>
-        <Plus size={22} className="text-gray-400" />
+        <Plus size={22} className="text-muted-foreground/80" />
         Generate Final Bill
       </Button>
     );
@@ -76,7 +76,7 @@ export const GenerateFinalBills = ({ id, total_bill }: DataProps) => {
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" size="sm" className="text-sm font-normal">
-            <Plus size={22} className="text-gray-400" />
+            <Plus size={22} className="text-muted-foreground/80" />
             Generate Final Bill
           </Button>
         </DialogTrigger>
@@ -119,7 +119,7 @@ export const GenerateFinalBills = ({ id, total_bill }: DataProps) => {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="bg-blue-600 w-full"
+                className="bg-primary w-full"
               >
                 Generate Bill
               </Button>
@@ -130,3 +130,4 @@ export const GenerateFinalBills = ({ id, total_bill }: DataProps) => {
     </>
   );
 };
+

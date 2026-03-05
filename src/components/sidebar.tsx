@@ -160,10 +160,10 @@ export const Sidebar = async () => {
   ];
 
   return (
-    <div className="w-full p-4 flex flex-col justify-between gap-4 bg-white overflow-y-scroll min-h-full">
+    <div className="w-full p-4 flex flex-col justify-between gap-4 bg-sidebar text-sidebar-foreground overflow-y-scroll min-h-full border-r border-sidebar-border/70">
       <div className="">
         <div className="flex items-center justify-center lg:justify-start gap-2">
-          <div className="p-1.5 rounded-md bg-blue-600 text-white">
+          <div className="p-1.5 rounded-lg bg-sidebar-primary text-sidebar-primary-foreground shadow-sm">
             <SquareActivity size={22} />
           </div>
           <Link
@@ -177,7 +177,7 @@ export const Sidebar = async () => {
         <div className="mt-4 text-sm">
           {SIDEBAR_LINKS.map((el) => (
             <div key={el.label} className="flex flex-col gap-2">
-              <span className="hidden uppercase lg:block text-gray-400 font-bold my-4">
+              <span className="hidden uppercase lg:block text-sidebar-foreground/55 tracking-wider font-semibold my-4">
                 {el.label}
               </span>
 
@@ -186,7 +186,7 @@ export const Sidebar = async () => {
                   return (
                     <Link
                       href={link.href}
-                      className="flex items-center justify-center lg:justify-start gap-4 text-gray-500 py-2 md:px-2 rounded-md hover:bg-blue-600/10"
+                      className="flex items-center justify-center lg:justify-start gap-4 text-sidebar-foreground/80 py-2.5 md:px-3 rounded-xl hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors"
                       key={link.name}
                     >
                       <SidebarIcon icon={link.icon} />

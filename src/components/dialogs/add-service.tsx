@@ -63,7 +63,7 @@ export const AddService = () => {
       <Dialog>
         <DialogTrigger asChild>
           <Button size="sm" className="text-sm font-normal">
-            <Plus size={22} className="text-gray-500" /> Add New Service
+            <Plus size={22} className="text-muted-foreground" /> Add New Service
           </Button>
         </DialogTrigger>
         <DialogContent>
@@ -108,7 +108,7 @@ export const AddService = () => {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="bg-blue-600 w-full"
+                className="bg-primary w-full"
               >
                 Submit
               </Button>
@@ -119,3 +119,4 @@ export const AddService = () => {
     </>
   );
 };
+

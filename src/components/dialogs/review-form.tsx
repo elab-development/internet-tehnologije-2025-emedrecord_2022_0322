@@ -119,7 +119,7 @@ export const ReviewForm = ({ staffId }: { staffId: string }) => {
                               className={cn(
                                 star <= field.value
                                   ? "text-red-500 fill-red-1000"
-                                  : "text-gray-400"
+                                  : "text-muted-foreground/80"
                               )}
                             />
                           </button>
@@ -164,3 +164,4 @@ export const ReviewForm = ({ staffId }: { staffId: string }) => {
     </>
   );
 };
+

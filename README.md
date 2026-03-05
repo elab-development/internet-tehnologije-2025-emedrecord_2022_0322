@@ -1,69 +1,208 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# eMedRecord
 
-## Getting Started
+eMedRecord is a full-stack medical records and appointment management app built with Next.js, Prisma, PostgreSQL, and Clerk authentication.
 
-First, run the development server:
+## Tech Stack
+
+- Next.js (App Router) + TypeScript
+- Prisma ORM + PostgreSQL (Neon compatible)
+- Clerk authentication
+- Tailwind CSS
+- Vitest + Playwright for automated testing
+
+## Prerequisites
+
+Before running the project, install:
+
+- Node.js 20+
+- npm 10+
+- PostgreSQL database (local or Neon)
+- Clerk account and API keys
+
+## 1) Clone and install
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/dpopoviic/emedrecord_app.git
+cd internet-tehnologije-2025-emedrecord_2022_0322
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+If PowerShell blocks `npm` scripts on Windows, use `npm.cmd` instead.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 2) Environment setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a file named `.env` in the project root (same level as `package.json`).
 
-## Learn More
+You can copy from `.env.example` (recommended):
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+cp .env.example .env
+# Windows (PowerShell / CMD)
+copy .env.example .env
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Then fill in real values.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Required `.env` values
 
-## Deploy on Vercel
+```dotenv
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_your_key"
+CLERK_SECRET_KEY="sk_test_your_key"
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-za pecka koji nije debil <3333
-
-git clone https://github.com/dpopoviic/emedrecord_app.git GDE KLONIRAS PUTANJA
-
-kreiraj .env fajl izvan svega u visual studio code-u evo sta treba da stoji u fajlu
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_YW1hemVkLWdlbGRpbmctOS5jbGVyay5hY2NvdW50cy5kZXYk
-CLERK_SECRET_KEY=sk_test_4VYjdtJ2rxx8CyOqVO6DTxTsxozzm4jMPZaaW9nRUg
-
-
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-
-
-# This was inserted by ⁨prisma init⁩:
-# Environment variables declared in this file are NOT automatically loaded by Prisma.
-# Please add ⁨import "dotenv/config";⁩ to your ⁨prisma.config.ts⁩ file, or use the Prisma CLI with Bun
-# to load environment variables from .env files: https://pris.ly/prisma-config-env-vars.
-# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
-# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
-# The following ⁨prisma+postgres⁩ URL is similar to the URL produced by running a local Prisma Postgres
-# server with the ⁨prisma dev⁩ CLI command, when not choosing any non-default ports or settings. The API key, unlike the
-# one found in a remote Prisma Postgres URL, does not contain any sensitive information.
+NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
+NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
 
 DATABASE_URL="postgresql://neondb_owner:npg_m0v9cNQFMlLu@ep-purple-band-ag9lp5pp-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=verify-full&channel_binding=require"
 
-npm install
 
+## 3) Database setup (development)
+
+Run Prisma generation and migrations:
+
+```bash
 npx prisma generate
-
 npx prisma migrate dev
+```
 
+Optional seed:
+
+```bash
+npx prisma db seed
+```
+
+## 4) Run the application
+
+Development:
+
+```bash
 npm run dev
+```
+
+Open http://localhost:3000
+
+Production build locally:
+
+```bash
+npm run build
+npm run start
+```
+
+## 5) Automated tests
+
+The project includes three layers of tests:
+
+- Unit tests (`test:unit`) for isolated core logic
+- Integration tests (`test:integration`) with a real test database
+- E2E smoke tests (`test:e2e`) in browser via Playwright
+
+### 5.1 Create `.env.test`
+
+Create `.env.test` in the project root:
+
+```bash
+cp .env.test.example .env.test
+# Windows (PowerShell / CMD)
+copy .env.test.example .env.test
+```
+
+Set at minimum:
+
+DATABASE_URL="postgresql://neondb_owner:npg_m0v9cNQFMlLu@ep-rapid-snow-agwsyk32-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+
+Important:
+- `.env.test` must point to a **separate test database/branch**, never your dev DB.
+- If you use Neon, create a dedicated test branch/database and use its connection string.
+
+### 5.2 Prepare test database
+
+```bash
+npm run test:db:migrate
+```
+
+Optional reset:
+
+```bash
+npm run test:db:reset
+```
+
+Optional test seed:
+
+```bash
+npm run test:db:seed
+```
+
+### 5.3 Run tests
+
+Unit tests:
+
+```bash
+npm run test:unit
+```
+
+Integration tests:
+
+```bash
+npm run test:integration
+```
+
+Install Playwright browser once:
+
+```bash
+npm run test:e2e:install
+```
+
+Run E2E smoke tests:
+
+```bash
+npm run test:e2e
+```
+
+E2E UI mode:
+
+```bash
+npm run test:e2e:ui
+```
+
+### One-shot verification order
+
+```bash
+npm run test:db:migrate
+npm run test:unit
+npm run test:integration
+npm run test:e2e:install
+npm run test:e2e
+```
+
+## What each test type validates
+
+### Unit tests
+- Fast checks of isolated logic (security sanitization, CSRF checks, authorization branches).
+- Purpose: detect regressions early without DB/browser overhead.
+
+### Integration tests
+- Real Prisma + PostgreSQL checks for permission rules and data relations.
+- Purpose: verify business rules work against real persisted data.
+
+### E2E smoke tests
+- Browser-level checks for critical user-facing flow and page availability.
+- Purpose: ensure app startup, routing, and key UI actions work together.
+
+## Troubleshooting
+
+### `P1001: Can't reach database server`
+- Check if your database is running and reachable.
+- Verify `DATABASE_URL` host, database name, and credentials.
+
+### Playwright browser missing
+- Run:
+
+```bash
+npm run test:e2e:install
+```
+
+### PowerShell `npm.ps1` execution policy error
+- Use `npm.cmd` instead of `npm`, for example:
+
+```bash
+npm.cmd run test:unit
+```
