@@ -5,7 +5,6 @@ import { nurseCanAccessAppointment } from "@/lib/permissions";
 import {db} from "@/lib/prisma";
 import { enforceCsrfProtection, sanitizePayload } from "@/lib/security";
 import { AppointmentSchema, VitalSignsSchema } from "@/lib/schema";
-import { getAppointmentWeatherSummary } from "@/utils/services/weather";
 import { checkRole, getNurseDoctorId } from "@/utils/roles";
 import { auth } from "@clerk/nextjs/server";
 import { AppointmentStatus } from "@prisma/client";
@@ -68,15 +67,9 @@ export async function createNewAppointment(data: any) {
       },
     });
 
-    const weatherSummary = await getAppointmentWeatherSummary(
-      appointmentDate,
-      validated.time
-    );
-
     return {
       success: true,
       message: "Appointment booked successfully",
-      weatherSummary,
     };
   } catch (error) {
     console.log(error);

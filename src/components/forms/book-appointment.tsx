@@ -65,9 +65,6 @@ export const BookAppointment = ({
         form.reset({});
         router.refresh();
         toast.success(res.message || "Appointment created successfully");
-        if (res.weatherSummary) {
-          toast.info(res.weatherSummary);
-        }
       }
     } catch (error) {
       console.log(error);
