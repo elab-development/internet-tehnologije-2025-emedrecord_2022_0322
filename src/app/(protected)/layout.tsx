@@ -2,6 +2,8 @@ import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
 import React from "react";
 
+export const dynamic = "force-dynamic";
+
 const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="w-full h-screen flex bg-background">
