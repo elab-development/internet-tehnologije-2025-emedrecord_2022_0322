@@ -98,8 +98,8 @@ export const ActionDialog = ({
       <Dialog>
         <DialogTrigger asChild>
           <Button
-            variant={"outline"}
-            className="flex items-center justify-center rounded-full text-primary/10 text-primary hover:underline"
+            variant={"ghost"}
+            className="action-pill"
           >
             View
           </Button>

@@ -25,8 +25,8 @@ export const MedicalHistoryDialog = async ({
         <Dialog>
             <DialogTrigger asChild>
                 <Button
-                    variant="outline"
-                    className="flex items-center justify-center rounded-full bg-primary/10 hover:underline text-primary px-1.5 py-1 text-xs md:text-sm"
+                    variant="ghost"
+                    className="action-pill"
                 >
                     {label}
                 </Button>

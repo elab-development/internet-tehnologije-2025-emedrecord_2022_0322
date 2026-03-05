@@ -79,7 +79,11 @@ const PatientDashboard = async () => {
 
             <div className="space-x-2">
               <Button size={"sm"}>{new Date().getFullYear()}</Button>
-              <Button size="sm" variant="outline" className="hover:underline">
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-foreground hover:bg-primary/10 hover:text-primary"
+              >
                 <Link href="/patient/self">View Profile</Link>
               </Button>
             </div>

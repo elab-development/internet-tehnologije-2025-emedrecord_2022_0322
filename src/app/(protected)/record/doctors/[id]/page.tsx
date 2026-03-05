@@ -18,7 +18,7 @@ const DoctorProfile = async (props: { params: Promise<{ id: string }> }) => {
   if (!data) return null;
 
   return (
-    <div className="bg-gray-100/60 h-full rounded-xl py-6 px-3 2xl:px-5 flex flex-col lg:flex-row gap-6">
+    <div className="bg-background/90 h-full rounded-xl py-6 px-3 2xl:px-5 flex flex-col lg:flex-row gap-6">
       <div className="w-full lg:w-[70%]">
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="bg-blue-50 py-6 px-4 rounded-md flex-1 flex gap-4">
@@ -107,7 +107,7 @@ const DoctorProfile = async (props: { params: Promise<{ id: string }> }) => {
         </div>
         {/* recent appointment */}
 
-        <div className="bg-white rounded-e-xl p-4 mt-6">
+        <div className="bg-card rounded-e-xl p-4 mt-6">
           <RecentAppointments data={data?.appointments} />
         </div>
       </div>
@@ -115,20 +115,20 @@ const DoctorProfile = async (props: { params: Promise<{ id: string }> }) => {
       {/* RIGHT SIDE */}
 
       <div className="w-full lg:w-[30%] flex flex-col gap-4">
-        <div className="bg-white p-4 rounded-md">
+        <div className="bg-card p-4 rounded-md">
           <h1 className="text-xl font-semibold">Quick Links</h1>
 
-          <div className="mt-8 flex gap-4 flex-wrap text-sm text-gray-500">
+          <div className="mt-8 flex gap-3 flex-wrap">
             <Link
               href={`/record/appointments?id=${data?.id}`}
-              className="p-3 rounded-md bg-yellow-60 hover:underline"
+              className="quick-link-chip"
             >
               Doctor Appointments
             </Link>
 
             <Link
               href="#"
-              className="p-3 rounded-md bg-purple-50 hover:underline"
+              className="quick-link-chip"
             >
               Apply for Leave
             </Link>

@@ -48,11 +48,11 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.972 0.018 255.3);
+  --background: oklch(0.952 0.006 255.2);
   --foreground: oklch(0.246 0.053 260.9);
-  --card: oklch(0.994 0.005 255.2);
+  --card: oklch(0.987 0.004 255.2);
   --card-foreground: oklch(0.262 0.053 261.2);
-  --popover: oklch(0.994 0.005 255.2);
+  --popover: oklch(0.987 0.004 255.2);
   --popover-foreground: oklch(0.262 0.053 261.2);
   --primary: oklch(0.57 0.192 259.7);
   --primary-foreground: oklch(0.982 0.01 253.2);
@@ -122,9 +122,19 @@
   body {
     @apply bg-background text-foreground;
     background-image:
-      radial-gradient(circle at 10% 0%, color-mix(in oklab, var(--primary) 24%, transparent), transparent 38%),
-      radial-gradient(circle at 95% 10%, color-mix(in oklab, var(--accent) 42%, transparent), transparent 40%);
+      radial-gradient(circle at 8% 0%, color-mix(in oklab, white 82%, var(--background)), transparent 36%),
+      radial-gradient(circle at 95% 10%, color-mix(in oklab, black 3%, var(--background)), transparent 40%);
     background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .action-pill {
+    @apply inline-flex items-center justify-center rounded-full border border-primary/20 bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary transition-colors duration-200 hover:border-primary/30 hover:bg-primary/15 md:text-sm;
+  }
+
+  .quick-link-chip {
+    @apply inline-flex items-center rounded-lg border border-border/70 bg-card px-4 py-2 text-xs font-medium text-foreground/80 transition-colors duration-200 hover:bg-accent hover:text-accent-foreground md:text-sm;
   }
 }
 

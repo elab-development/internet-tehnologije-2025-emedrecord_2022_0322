@@ -122,7 +122,7 @@ export const AppointmentActionDialog = ({
               onClick={() => handleAction()}
               variant="outline"
               className={cn(
-                "px-4 py-2 text-sm font-medium text-white hover:text-white hover:underline",
+                "px-4 py-2 text-sm font-medium text-white hover:text-white",
                 type === "approve"
                   ? "bg-primary hover:bg-primary/90"
                   : "bg-destructive hover:bg-destructive"

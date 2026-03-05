@@ -37,7 +37,7 @@ export const StatCard = ({
             asChild
             size="sm"
             variant="outline"
-            className="font-normal text-xs bg-transparent p-2 h-0 hover:underline text-muted-foreground"
+            className="h-7 rounded-md px-2 font-normal text-xs text-muted-foreground hover:bg-primary/10 hover:text-primary"
           >
             <Link href={link}>See details</Link>
           </Button>

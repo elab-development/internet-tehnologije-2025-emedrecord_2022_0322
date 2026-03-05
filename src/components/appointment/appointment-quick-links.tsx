@@ -5,6 +5,16 @@ import { ReviewForm } from "../dialogs/review-form";
 
 const AppointmentQuickLinks = async ({ staffId }: { staffId: string }) => {
   const isPatient = await checkRole("PATIENT");
+  const quickLinks = [
+    { href: "?cat=charts", label: "Charts" },
+    { href: "?cat=appointments", label: "Appointments" },
+    { href: "?cat=diagnosis", label: "Diagnosis" },
+    { href: "?cat=bills", label: "Bills" },
+    { href: "?cat=medical-history", label: "Medical History" },
+    { href: "?cat=payments", label: "Payments" },
+    { href: "?cat=lab-test", label: "Lab Test" },
+    { href: "?cat=appointments#vital-signs", label: "Vital Signs" },
+  ];
 
   return (
     <Card className="w-full rounded-xl bg-card shadow-none">
@@ -12,60 +22,11 @@ const AppointmentQuickLinks = async ({ staffId }: { staffId: string }) => {
         <CardTitle>Quick Links</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-wrap gap-2">
-        <Link
-          href="?cat=charts"
-          className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600"
-        >
-          Charts
-        </Link>
-        <Link
-          href="?cat=appointments"
-          className="px-4 py-2 rounded-lg bg-violet-100 text-violet-600"
-        >
-          Appointments
-        </Link>
-
-        <Link
-          href="?cat=diagnosis"
-          className="px-4 py-2 rounded-lg bg-blue-100 text-primary"
-        >
-          Diagnosis
-        </Link>
-
-        <Link
-          href="?cat=bills"
-          className="px-4 py-2 rounded-lg bg-green-100 text-green-600"
-        >
-          Bills
-        </Link>
-
-        <Link
-          href="?cat=medical-history"
-          className="px-4 py-2 rounded-lg bg-red-100 text-red-600"
-        >
-          Medical History
-        </Link>
-
-        <Link
-          href="?cat=payments"
-          className="px-4 py-2 rounded-lg bg-purple-100 text-purple-600"
-        >
-          Payments
-        </Link>
-
-        <Link
-          href="?cat=lab-test"
-          className="px-4 py-2 rounded-lg bg-purple-100 text-purple-600"
-        >
-          Lab Test
-        </Link>
-
-        <Link
-          href="?cat=appointments#vital-signs"
-          className="px-4 py-2 rounded-lg bg-purple-100 text-purple-600"
-        >
-          Vital Signs
-        </Link>
+        {quickLinks.map((link) => (
+          <Link key={link.href} href={link.href} className="quick-link-chip">
+            {link.label}
+          </Link>
+        ))}
 
         {!isPatient && <ReviewForm staffId={staffId} />}
       </CardContent>
