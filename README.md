@@ -98,6 +98,10 @@ Build app image:
 ```bash
 docker compose --progress=plain build app
 ```
+```bash -option 2
+
+docker-compose up --build
+```
 
 Start app + db:
 
@@ -117,7 +121,9 @@ Stop containers:
 ```bash
 docker compose down
 ```
-
+```bash --option 2
+docker-compose down --rmi all --volumes
+```
 ## 5) Automated tests
 
 The project includes three layers of tests:

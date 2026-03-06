@@ -54,23 +54,6 @@ export const ServiceSettings = async () => {
       <td className="hidden xl:table-cell w-[50%]">
         <p className="line-clamp-1">{item.description!}</p>
       </td>
-      <td>
-        {/* <div className="flex items-center gap-2">
-              <Link href={`/list/teachers/${item?.id}`}>
-                <button className="w-7 h-7 flex items-center justify-center rounded-full bg-lamaSky">
-                  View
-                </button>
-              </Link>
-    
-              {checkRole("ADMIN") && (
-                <ActionDialog
-                  type="delete"
-                  id={item.id.toString()}
-                  deleteType="auditLog"
-                />
-              )}
-            </div> */}
-      </td>
     </tr>
   );
 

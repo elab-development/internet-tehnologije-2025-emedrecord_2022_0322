@@ -277,18 +277,6 @@ model Diagnosis {
   updated_at       DateTime  @updatedAt
 }
 
-model AuditLog {
-  id          Int   @id @default(autoincrement())
-  user_id     String
-  record_id   String
-  action      String
-  details     String?
-  model       String
-
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-}
-
 model Rating {
   id         Int      @id @default(autoincrement())
   staff_id   String

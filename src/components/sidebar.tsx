@@ -4,7 +4,6 @@ import {
   LayoutDashboard,
   List,
   ListOrdered,
-  Logs,
   LucideIcon,
   Pill,
   Receipt,
@@ -137,18 +136,6 @@ export const Sidebar = async () => {
     {
       label: "System",
       links: [
-        {
-          name: "Notifications",
-          href: "/notifications",
-          access: ACCESS_LEVELS_ALL,
-          icon: Bell,
-        },
-        {
-          name: "Audit Logs",
-          href: "/admin/audit-logs",
-          access: ["admin"],
-          icon: Logs,
-        },
         {
           name: "Settings",
           href: "/admin/system-settings",
