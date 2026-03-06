@@ -5,6 +5,14 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
+FROM base AS migrator
+WORKDIR /app
+COPY package.json ./
+COPY --from=deps /app/node_modules ./node_modules
+COPY prisma ./prisma
+COPY prisma.config.ts ./prisma.config.ts
+CMD ["npx", "prisma", "migrate", "deploy"]
+
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules

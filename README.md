@@ -98,15 +98,17 @@ Build app image:
 ```bash
 docker compose --progress=plain build app
 ```
-```bash -option 2
 
-docker-compose up --build
-```
-
-Start app + db:
+Start app + db (with automatic `prisma migrate deploy`):
 
 ```bash
-docker compose up -d
+docker compose up --build -d
+```
+
+Alternative legacy command:
+
+```bash
+docker-compose up --build -d
 ```
 
 View logs:
@@ -121,7 +123,10 @@ Stop containers:
 ```bash
 docker compose down
 ```
-```bash --option 2
+
+Optional cleanup (remove containers, images, and volumes):
+
+```bash
 docker-compose down --rmi all --volumes
 ```
 ## 5) Automated tests
