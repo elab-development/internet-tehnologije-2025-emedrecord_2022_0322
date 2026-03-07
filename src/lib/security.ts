@@ -33,6 +33,10 @@ export const sanitizePayload = <T>(value: T): T => {
     return value.map((item) => sanitizePayload(item)) as T;
   }
 
+  if (value instanceof Date) {
+    return value;
+  }
+
   if (value && typeof value === "object") {
     const entries = Object.entries(value as Record<string, unknown>).map(
       ([key, item]) => [key, sanitizePayload(item)]
