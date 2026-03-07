@@ -26,15 +26,15 @@ export const Navbar = () => {
   const path = formatPathName();
 
   return (
-    <div className="p-5 flex justify-between bg-white">
-      <h1 className="text-xl font-medium text-gray-500 capitalize">
+    <div className="mt-3 mx-3 xl:mx-4 px-5 py-3 rounded-2xl border border-border/70 bg-card/85 backdrop-blur-sm flex justify-between items-center shadow-sm">
+      <h1 className="text-xl font-semibold text-foreground/85 capitalize">
         {path || "Overview"}
       </h1>
 
       <div className="flex items-center gap-4">
-        <div className="relative">
-          <Bell />
-          <p className="absolute -top-3 right-1 size-4 bg-red-600 text-white rounded-full text-[10px] text-center">
+        <div className="relative text-muted-foreground">
+          <Bell className="size-5" />
+          <p className="absolute -top-2 -right-2 size-4 bg-primary text-primary-foreground rounded-full text-[10px] text-center font-medium">
             2
           </p>
         </div>

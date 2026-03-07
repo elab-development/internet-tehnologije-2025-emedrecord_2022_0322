@@ -21,7 +21,7 @@ export const StatSummary = ({ data, total }: { data: any; total: number }) => {
   const consultation = dataInfo[2].count;
 
   return (
-    <div className="bg-white rounded-xl w-full h-full p-4">
+    <div className="bg-card rounded-xl w-full h-full p-4">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold">Summary</h1>
 
@@ -51,7 +51,7 @@ export const StatSummary = ({ data, total }: { data: any; total: number }) => {
 
         <Users
           size={30}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-400"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-muted-foreground/80"
         />
       </div>
 
@@ -61,7 +61,7 @@ export const StatSummary = ({ data, total }: { data: any; total: number }) => {
             <div className="w-5 h-5 bg-[#000000] rounded-xl" />
             <h1 className="font-bold">{formatNumber(appointment)}</h1>
           </div>
-          <h2 className="text-xs text-gray-400">
+          <h2 className="text-xs text-muted-foreground/80">
             {dataInfo[1].name}(
             {((appointment / (appointment + consultation)) * 100).toFixed(0)})
           </h2>
@@ -73,7 +73,7 @@ export const StatSummary = ({ data, total }: { data: any; total: number }) => {
             <h1 className="font-bold">{formatNumber(consultation)}</h1>
           </div>
 
-          <h2 className="text-xs text-gray-400">
+          <h2 className="text-xs text-muted-foreground/80">
             {dataInfo[2].name}(
             {((consultation / (appointment + consultation)) * 100).toFixed(0)})
           </h2>
@@ -82,3 +82,4 @@ export const StatSummary = ({ data, total }: { data: any; total: number }) => {
     </div>
   );
 };
+

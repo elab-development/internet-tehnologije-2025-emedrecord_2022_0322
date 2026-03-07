@@ -196,3 +196,146 @@ export async function getPatientById(id: string) {
     return { success: false, message: "Internal Server Error", status: 500 };
   }
 }
+
+export async function getPatientFullDataById(id: string) {
+  try {
+    const patient = await db.patient.findFirst({
+      where: {
+        OR: [
+          {
+            id,
+          },
+          { email: id },
+        ],
+      },
+      include: {
+        _count: {
+          select: {
+            appointments: true,
+          },
+        },
+        appointments: {
+          select: {
+            appointment_date: true,
+          },
+          orderBy: {
+            appointment_date: "desc",
+          },
+          take: 1,
+        },
+      },
+    });
+
+    if (!patient) {
+      return {
+        success: false,
+        message: "Patient data not found",
+        status: 404,
+      };
+    }
+    const lastVisit = patient.appointments[0]?.appointment_date || null;
+
+    return {
+      success: true,
+      data: {
+        ...patient,
+        totalAppointments: patient._count.appointments,
+        lastVisit,
+      },
+      status: 200,
+    };
+  } catch (error) {
+    console.log(error);
+    return { success: false, message: "Internal Server Error", status: 500 };
+  }
+}
+
+export async function getAllPatients({
+  page,
+  limit,
+  search,
+  doctorId,
+}: {
+  page: number | string;
+  limit?: number | string;
+  search?: string;
+  doctorId?: string;
+}) {
+  try {
+    const PAGE_NUMBER = Number(page) <= 0 ? 1 : Number(page);
+    const LIMIT = Number(limit) || 10;
+
+    const SKIP = (PAGE_NUMBER - 1) * LIMIT;
+
+    const [patients, totalRecords] = await Promise.all([
+      db.patient.findMany({
+        where: {
+          AND: [
+            {
+              OR: [
+                { first_name: { contains: search, mode: "insensitive" } },
+                { last_name: { contains: search, mode: "insensitive" } },
+                { phone: { contains: search, mode: "insensitive" } },
+                { email: { contains: search, mode: "insensitive" } },
+              ],
+            },
+            ...(doctorId
+              ? [
+                  {
+                    appointments: {
+                      some: {
+                        doctor_id: doctorId,
+                      },
+                    },
+                  },
+                ]
+              : []),
+          ],
+        },
+        include: {
+          appointments: {
+            select: {
+              medical: {
+                select: { created_at: true, treatment_plan: true },
+                orderBy: { created_at: "desc" },
+                take: 1,
+              },
+            },
+            orderBy: { appointment_date: "desc" },
+            take: 1,
+          },
+        },
+        skip: SKIP,
+        take: LIMIT,
+        orderBy: { first_name: "asc" },
+      }),
+      db.patient.count({
+        where: {
+          ...(doctorId
+            ? {
+                appointments: {
+                  some: {
+                    doctor_id: doctorId,
+                  },
+                },
+              }
+            : {}),
+        },
+      }),
+    ]);
+
+    const totalPages = Math.ceil(totalRecords / LIMIT);
+
+    return {
+      success: true,
+      data: patients,
+      totalRecords,
+      totalPages,
+      currentPage: PAGE_NUMBER,
+      status: 200,
+    };
+  } catch (error) {
+    console.log(error);
+    return { success: false, message: "Internal Server Error", status: 500 };
+  }
+}

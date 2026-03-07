@@ -41,6 +41,7 @@ const RenderInput = ({ field, props }: { field: any; props: InputProps }) => {
             type={props.inputType}
             placeholder={props.placeholder}
             {...field}
+            value={field?.value ?? ""}
           />
         </FormControl>
       );
@@ -100,7 +101,7 @@ const RenderInput = ({ field, props }: { field: any; props: InputProps }) => {
                 />
                 <Label
                   htmlFor={i.value}
-                  className="flex flex-1 items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-blue-500 peer-data-[state=checked]:text-blue-600"
+                  className="flex flex-1 items-center justify-center rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-blue-500 peer-data-[state=checked]:text-primary"
                 >
                   {i.label}
                 </Label>
@@ -117,6 +118,7 @@ const RenderInput = ({ field, props }: { field: any; props: InputProps }) => {
             type={props.inputType}
             placeholder={props.placeholder}
             {...field}
+            value={field?.value ?? ""}
           ></Textarea>
         </FormControl>
       );
@@ -185,14 +187,14 @@ export const SwitchInput = ({ data, setWorkSchedule }: SwitchProps) => {
         >
           <Switch
             id={el.value}
-            className="data-[state=checked]:bg-blue-600 peer"
+            className="data-[state=checked]:bg-primary peer"
             onCheckedChange={(e) => handleChange(el.value, true, "09:00")}
           />
           <Label htmlFor={el.value} className="w-20 capitalize">
             {el.value}
           </Label>
 
-          <Label className="text-gray-400 font-normal italic peer-data-[state=checked]:hidden pl-10">
+          <Label className="text-muted-foreground/80 font-normal italic peer-data-[state=checked]:hidden pl-10">
             Not working on this day
           </Label>
 

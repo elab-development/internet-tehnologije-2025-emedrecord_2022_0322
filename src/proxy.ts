@@ -19,18 +19,16 @@ export default clerkMiddleware(async (auth, req) => {
 
   const role =
     userId && sessionClaims?.metadata?.role
-      ? sessionClaims.metadata.role
+      ? String(sessionClaims.metadata.role).toLowerCase()
       : userId
       ? "patient"
       : null;
 
-  // Ako je korisnik ulogovan i nalazi se na auth stranicama ili root, preusmeri ga
   if (userId && (isAuthRoute(req) || isRootRoute(req))) {
     const redirectRole = role || "patient";
     return NextResponse.redirect(new URL(`/${redirectRole}`, url.origin));
   }
 
-  // Ako korisnik nije ulogovan i pokušava da pristupi zaštićenoj ruti
   const matchingRoute = matchers.find(({ matcher }) => matcher(req));
   
   if (matchingRoute && !userId) {
@@ -38,11 +36,9 @@ export default clerkMiddleware(async (auth, req) => {
   }
 
   if (matchingRoute && !matchingRoute.allowedRoles.includes(role || "patient")) {
-    // Redirect unauthorized roles to their respective default pages
     return NextResponse.redirect(new URL(`/${role}`, url.origin));
   }
 
-  // Continue if the user is authorized
   return NextResponse.next();
 });
 

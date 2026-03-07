@@ -11,7 +11,7 @@ interface DataProps {
 }
 export const AppointmentChart = ({ data }: DataProps) => {
   return (
-    <div className="bg-white rounded-xl p-4 h-full">
+    <div className="bg-card rounded-xl p-4 h-full">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold">Appointments</h1>
       </div>
@@ -56,3 +56,4 @@ export const AppointmentChart = ({ data }: DataProps) => {
     </div>
   );
 };
+

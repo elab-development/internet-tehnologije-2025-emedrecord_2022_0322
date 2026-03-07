@@ -6,7 +6,7 @@ import { Appointment } from "@/types/data-types";
 import { ProfileImage } from "../profile-image";
 import { format } from "date-fns";
 import { AppointmentStatusIndicator } from "../appointment-status-indicator";
-import { ViewAppointment } from "../view-appoitment";
+import { ViewAppointment } from "../view-appointment";
 
 
 interface DataProps {
@@ -76,7 +76,7 @@ export const RecentAppointments = ({ data }: DataProps) => {
             <ProfileImage
               url={item?.doctor?.img!}
               name={item?.doctor?.name}
-              className="bg-blue-600"
+              className="bg-primary"
               bgColor={item?.doctor?.colorCode!}
               textClassName="text-black font-medium"
             />
@@ -105,7 +105,7 @@ export const RecentAppointments = ({ data }: DataProps) => {
   };
 
   return (
-    <div className="bg-white rounded-xl p-2 2xl:p-4">
+    <div className="bg-card rounded-xl p-2 2xl:p-4">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold">Recent Appointments</h1>
 
@@ -118,3 +118,4 @@ export const RecentAppointments = ({ data }: DataProps) => {
     </div>
   );
 };
+

@@ -7,11 +7,11 @@ interface TableProps {
 }
 export const Table = ({ columns, renderRow, data }: TableProps) => {
   return (
-    <table className="w-full mt-4">
+    <table className="w-full mt-4 rounded-xl overflow-hidden border border-border/70 bg-card/70">
       <thead>
-        <tr className="text-left text-gray-500 text-sm lg:uppercase">
+        <tr className="text-left text-muted-foreground text-sm lg:uppercase bg-secondary/50">
           {columns.map(({ header, key, className }) => (
-            <th key={key} className={className}>
+            <th key={key} className={`py-3 ${className || ""}`}>
               {header}
             </th>
           ))}
@@ -20,8 +20,8 @@ export const Table = ({ columns, renderRow, data }: TableProps) => {
 
       <tbody>
         {data?.length < 1 && (
-          <tr className="text-gray-400 text-base py-10">
-            <td>No Data Found</td>
+          <tr className="text-muted-foreground text-base">
+            <td className="py-6 px-2">No Data Found</td>
           </tr>
         )}
 

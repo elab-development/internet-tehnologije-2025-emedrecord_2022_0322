@@ -1,4 +1,5 @@
-import { Link, LucideIcon } from "lucide-react";
+import { LucideIcon } from "lucide-react";
+import Link from "next/link";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
@@ -11,7 +12,7 @@ interface CardProps {
   value: number;
   className?: string;
   iconClassName?: string;
-  link: string;
+  link?: string | null;
 }
 
 const CardIcon = ({ icon: Icon }: { icon: LucideIcon }) => {
@@ -30,22 +31,24 @@ export const StatCard = ({
    return (
     <Card className={cn("w-full md:w-[330px] 2xl:w-[250px]", className)}>
       <CardHeader className="flex flex-row items-center justify-between py-3 capitalize">
-        <h3>{title}</h3>
-        <Button
-          asChild
-          size="sm"
-          variant="outline"
-          className="font-normal text-xs bg-transparent p-2 h-0 hover:underline"
-        >
-          <Link href={link}>See details</Link>
-        </Button>
+        <h3 className="font-semibold text-foreground/90">{title}</h3>
+        {link ? (
+          <Button
+            asChild
+            size="sm"
+            variant="outline"
+            className="h-7 rounded-md px-2 font-normal text-xs text-muted-foreground hover:bg-primary/10 hover:text-primary"
+          >
+            <Link href={link}>See details</Link>
+          </Button>
+        ) : null}
       </CardHeader>
 
       <CardContent>
         <div className="flex items-center gap-4">
           <div
             className={cn(
-              "w-10 h-10 bg-violet-50-500/15 rounded-full flex items-center justify-center text-violet-600",
+              "w-10 h-10 bg-primary/15 rounded-full flex items-center justify-center text-primary",
               iconClassName
             )}
           >
@@ -59,9 +62,10 @@ export const StatCard = ({
       </CardContent>
 
       <CardFooter className="pb-3">
-        <p className="text-sm text-gray-500">{note}</p>
+        <p className="text-sm text-muted-foreground">{note}</p>
       </CardFooter>
     </Card>
   );
 };
+
 
